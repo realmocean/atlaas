@@ -1569,6 +1569,17 @@
     classcat "^5.0.3"
     zustand "^4.4.1"
 
+"@realmocean/atlaas@^1.2.71":
+  version "1.2.71"
+  resolved "https://registry.yarnpkg.com/@realmocean/atlaas/-/atlaas-1.2.71.tgz#3735ae112ae6378f4c28418c78c7ec03d5ca187b"
+  integrity sha512-PqEyXkhte25lhJWGgax8PguayhN1K0Lhx7WhHYu6DTTqZupTGJ53ye0F/etcL6nBPPXvSJ/gjz6Ln6lAxi4ceg==
+  dependencies:
+    "@radix-ui/react-accordion" "^1.1.2"
+    "@radix-ui/react-icons" "^1.3.0"
+    "@radix-ui/react-popover" "^1.0.7"
+    "@realmocean/sdk" "^1.0.164"
+    reactflow "^11.11.3"
+
 "@realmocean/atlaskit@^17.8.40":
   version "17.8.40"
   resolved "https://registry.yarnpkg.com/@realmocean/atlaskit/-/atlaskit-17.8.40.tgz#d24fb4ecc7395af90228bccb87581c52611ee90a"

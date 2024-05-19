@@ -4,6 +4,8 @@ import App from './view/Page';
 import { AccountContext } from '../../../context/account/AccountContext';
 import React from "react";
 
+import {Atlaas} from "@realmocean/atlaas";
+
 export class HomeController extends UIController {
     public override LoadView(): UIView {
         //  const { realms, isLoading } = useListRealms();

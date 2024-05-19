@@ -85,6 +85,7 @@ const webConfig = {
         '@realmocean/atlaskit': 'realmocean$atlaskit',
         '@realmocean/sdk': 'realmocean$sdk',
         '@realmocean/ui': 'realmocean$ui',
+        '@realmocean/atlaas':'@realmocean$atlaas',
         '@celmino/platform': 'celmino$platform',
 
         'react': 'tuval$react',
