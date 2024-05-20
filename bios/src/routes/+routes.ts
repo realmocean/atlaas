@@ -2,8 +2,9 @@ import { BiosController, Text, UIController, UIRoute, UIRouteOutlet, UIRoutes, U
 import { LoginController } from "./@/login/+controller"
 import { SignupController } from "./@/signup/+controller"
 //@ts-ignore
-import { HomeController } from "./@/*/+controller"
-import { LayoutController } from "./@/+controller"
+import { HomeController } from "./@/app/+controller"
+import { LandingController } from "./@/+controller"
+import { LayoutController } from "./@/app/+layout"
 
 
 class KontDrakula extends UIController {
@@ -24,6 +25,7 @@ export class RoutesController extends BiosController {
     LoadBiosView(): UIView {
         return (
             UIRoutes(
+                UIRoute('/', LandingController),
                 UIRoute('/app', LayoutController).children(
                     UIRoute('', HomeController),
                     UIRoute('*', HomeController),

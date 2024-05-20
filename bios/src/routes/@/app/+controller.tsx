@@ -4,7 +4,7 @@ import App from './view/Page';
 import { AccountContext } from '../../../context/account/AccountContext';
 import React from "react";
 
-import {Atlaas} from "@realmocean/atlaas";
+import { Atlaas } from "@realmocean/atlaas";
 
 export class HomeController extends UIController {
     public override LoadView(): UIView {
@@ -12,9 +12,7 @@ export class HomeController extends UIController {
         //  console.log('Error -- :' + error?.code)
         return (
             AccountContext(() =>
-                ReactView(
-                    <App></App>
-                )
+                Atlaas()
             )
 
         )
