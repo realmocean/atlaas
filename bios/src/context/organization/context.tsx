@@ -1,6 +1,6 @@
 import { useGetMe, useGetOrganization, useGetRealm, useGetTeam } from "@realmocean/sdk";
 import { is } from "@tuval/core";
-import { UIView, ViewProperty, useNavigate, useParams } from "@tuval/forms";
+import { Text, UIView, ViewProperty, useNavigate, useParams } from "@tuval/forms";
 import React, { Fragment } from "react";
 import { createContext } from "react";
 import { Models } from "../../Models";
@@ -12,7 +12,7 @@ export const useOrganization = (): { organization: Models.Organization } => {
 
 
     const { organization = null } = React.useContext(OrganizationContextProvider);
-
+    
     return { organization: organization };
 }
 
@@ -43,16 +43,16 @@ function OrganizationContextRenderer({ control }: { control: OrganizationContext
 
 
     const { organizationId } = useParams();
-    const { team, isLoading } = useGetTeam('console', organizationId)
+    const { organization, isLoading } = useGetOrganization({organizationId})
 
 
 
     return (
         is.function(control.vp_ChildFunc) && !isLoading ?
             (
-                <OrganizationContextProvider.Provider value={{ organization: team }}>
+                 <OrganizationContextProvider.Provider value={{ organization: organization }}>
                     <Proxy control={control}></Proxy>
-                </OrganizationContextProvider.Provider>
+                </OrganizationContextProvider.Provider> 
             ) : <Fragment />
     )
 

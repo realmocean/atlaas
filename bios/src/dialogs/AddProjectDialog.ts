@@ -1,7 +1,9 @@
 import { LoadingButton, useFormState } from "@realmocean/atlaskit";
-import { useCreateDocument } from "@realmocean/sdk";
+import { useCreateDocument, useCreateRealm } from "@realmocean/sdk";
 import { EventBus } from "@tuval/core";
 import { UIViewBuilder, useFormController, useDialog, useFormBuilder, useNavigate, Button, Text, nanoid } from "@tuval/forms";
+import { FormBuilder } from "../FormBuilder/FormBuilder";
+import { useOrganization } from "../context/organization/context";
 
 
 export const SaveDocumentAction = (formMeta, action) => UIViewBuilder(() => {
@@ -19,11 +21,8 @@ export const SaveDocumentAction = (formMeta, action) => UIViewBuilder(() => {
     let isFormLoading = false;
 
     const views = []
-    const { workspaceId, appletId } = formMeta;
-
-    const { createDocument: createWorkspaceTreeItem } = useCreateDocument(workspaceId, 'workspace', 'ws_tree');
-    const { createDocument, isLoading } = useCreateDocument(workspaceId, appletId, 'documents');
-    const { createDocument: createDocumentContent } = useCreateDocument(workspaceId, appletId, 'documentContent');
+    const { organizationId } = formMeta;
+    const { createRealm } = useCreateRealm();
 
     const formData: any = useFormState({
         values: true,
@@ -37,41 +36,11 @@ export const SaveDocumentAction = (formMeta, action) => UIViewBuilder(() => {
 
                 const data = formData?.values ?? {};
 
-                createDocument(
-                    {
-                        data: {
-                            ...data
-                        }
-                    },
-                    (document) => {
-                        createDocumentContent({
-                            documentId: document.$id,
-                            data: {
-                                content: ''
-                            }
-                        }, (document) => {
 
-                            createWorkspaceTreeItem({
-                                documentId: document.$id,
-                                data: {
-                                    name: data.name,
-                                    type: 'document',
-                                    parent: data.parent,
-                                    tree_widget: 'com.celmino.applet.document-management',
-                                    appletId,
-                                    path: (new Date()).getTime().toString(),
-                                    iconName: 'document',
-                                    iconCategory: 'SystemIcons',
-                                    //viewer:'com.tuvalsoft.viewer.document'
-                                }
-                            }, (item) => {
+                createRealm({ realmId: nanoid(), name: data.name, organizationId: organizationId }, ()=> {
+                    dialog.Hide();
+                })
 
-                                EventBus.Default.fire('applet.added', { treeItem: item });
-                                dialog.Hide();
-                            })
-                        })
-                    }
-                )
             })
     )
 }
@@ -79,24 +48,16 @@ export const SaveDocumentAction = (formMeta, action) => UIViewBuilder(() => {
 
 SaveDocumentAction.Id = nanoid();
 
-export const AddProjectDialog = () => {
-    
-        return {
-            "title": 'Create project',
-          
-            "actions": [
-                {
-                    "label": "Save",
-                    "type": SaveDocumentAction.Id,
-                    /*  "successActions": [{
-                         "type": "hide"
-                     },
-                     {
-                         "type": "navigate",
-                         "url": "/@/com.tuvalsoft.app.procetra/workspace/{{id}}"
-                     }
-                     ] */
-                    /*  "successActions": [{
+export const AddProjectDialog = (organizationId: string) => {
+
+    return {
+        "title": 'Create project',
+        "organizationId": organizationId,
+        "actions": [
+            {
+                "label": "Save",
+                "type": SaveDocumentAction.Id,
+                /*  "successActions": [{
                      "type": "hide"
                  },
                  {
@@ -104,17 +65,26 @@ export const AddProjectDialog = () => {
                      "url": "/@/com.tuvalsoft.app.procetra/workspace/{{id}}"
                  }
                  ] */
-                }
-            ],
-            "fieldMap": {
+                /*  "successActions": [{
+                 "type": "hide"
+             },
+             {
+                 "type": "navigate",
+                 "url": "/@/com.tuvalsoft.app.procetra/workspace/{{id}}"
+             }
+             ] */
+            }
+        ],
+        "fieldMap": {
 
-                "list_name": {
-                    "label": "name",
-                    "type": "text",
-                    "name": "name"
-                }
+            "list_name": {
+                "label": "name",
+                "type": "text",
+                "name": "name"
             }
         }
-    
+    }
+
 }
 
+FormBuilder.injectAction(SaveDocumentAction);

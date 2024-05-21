@@ -10,6 +10,8 @@ import { ProjectController } from "./@/app/organization-[organizationId]/project
 import { ScenarioController } from "./@/app/organization-[organizationId]/project-[projectId]/scenario-[scenarioId]/+controller"
 import { ScenariosController } from "./@/app/organization-[organizationId]/project-[projectId]/scenarios/+controller"
 import { LogoutController } from "./@/logout/+controller"
+import { ProjectsController } from "./@/app/organization-[organizationId]/projects/+controller"
+import { FormsController } from "./@/app/organization-[organizationId]/project-[projectId]/forms/+controller"
 
 
 class KontDrakula extends UIController {
@@ -33,7 +35,9 @@ export class RoutesController extends BiosController {
                 UIRoute('/', LandingController),
                 UIRoute('/app', LayoutController).children(
                     UIRoute(':organizationId', OrganizationController).children(
+                        UIRoute('projects', ProjectsController),
                         UIRoute(':projectId', ProjectController).children(
+                            UIRoute('[forms]',FormsController ),
                             UIRoute('[scenarios]',ScenariosController ),
                             UIRoute('[scenarios]/:scenarioId',ScenarioController )
                            

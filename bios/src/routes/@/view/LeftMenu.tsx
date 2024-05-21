@@ -1,5 +1,6 @@
 import { ButtonItem, Icons, NavigationContext, NavigationHeader, Section, SideNavigation } from "@realmocean/atlaskit"
 import { VStack, Text, Icon, ForEach, UIRouteLink } from "@tuval/forms"
+import { useProjectNavigate } from "../../../hooks/useProjectNavigate";
 
 function getSelectedId() {
     const regex = /\[(.*?)\]/;
@@ -63,7 +64,7 @@ const Menu = [
     }
 ]
 export const LeftMenu = () => {
-
+    const {navigate} = useProjectNavigate();
     return (
         VStack(
             SideNavigation(
@@ -84,7 +85,7 @@ export const LeftMenu = () => {
                             .iconBefore(menuItem.icon.fontSize(20))
                             .isSelected(getSelectedId() === menuItem.id)
                             .onClick(()=> {
-                                
+                                navigate(`[${menuItem.id}]`)
                             })
                         ))
                        

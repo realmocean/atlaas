@@ -21,8 +21,11 @@ import { NotificationIndicator } from '@atlaskit/notification-indicator';
 import DropdownMenu, { DropdownItem, DropdownItemGroup } from '@atlaskit/dropdown-menu';
 import Popup from '@atlaskit/popup';
 import { Box, xcss } from '@atlaskit/primitives';
-import { DynoDialog } from "../../../../FormBuilder/DynoDialog";
-import { AddProjectDialog } from "../../../../dialogs/AddProjectDialog";
+import { DynoDialog } from "../../../../../FormBuilder/DynoDialog";
+import { AddProjectDialog } from "../../../../../dialogs/AddProjectDialog";
+import { useOrganization } from "../../../../../context/organization/context";
+import { useListRealms } from "@realmocean/sdk";
+import { useOrganizationNavigate } from "../../../../../hooks/useOrganizationNavigate";
 
 const DefaultAppSwitcher = () => <AppSwitcher tooltip="Switch to..." />;
 
@@ -89,41 +92,49 @@ const AtlassianProductHome = () => (
     <ProductHome icon={AtlassianIcon} logo={Logo as any} />
 );
 
-export const Navigation= ()=>{
+export const Navigation = () => {
+    const { organization } = useOrganization();
+    const { realms, isLoading } = useListRealms();
+    const { navigate } = useOrganizationNavigate();
+    const [open, setOpen] = useState(false)
 
-
-        return (
+    return (
+        isLoading ? <Fragment /> :
             <AtlassianNavigation
                 label="site"
                 primaryItems={[
-
-                    <DropdownMenu autoFocus={false} trigger={({ triggerRef, ...props }) => <PrimaryDropdownButton {...props} ref={triggerRef}>Projects</PrimaryDropdownButton>}
+                    <DropdownMenu isOpen={open} onOpenChange={(e) => setOpen(e.isOpen)} autoFocus={false} trigger={({ triggerRef, ...props }) => <PrimaryDropdownButton {...props} ref={triggerRef}>Projects</PrimaryDropdownButton>}
                         shouldRenderToParent>
                         <DropdownItemGroup>
-                            <DropdownItem
-                                component={({ children, ...props }, ref) => <MenuGroup>
-                                    <Section title="Recent">
-                                        <ButtonItem
+                            {
+                                realms.map(realm =>
+                                    <DropdownItem
+                                        component={({ children, ...props }, ref) => <MenuGroup>
+                                            <Section title="Recent">
+                                                <ButtonItem
+                                                    description="Next-gen software project"
+                                                    onClick={() => {
+                                                        navigate(`${realm.name}-${realm.$id}`);
+                                                        setOpen(false);
+                                                    }}
 
-                                            description="Next-gen software project"
-                                        >
-                                            Navigation System
-                                        </ButtonItem>
-                                        <ButtonItem
-                                            description="Next-gen service desk"
-                                        >
-                                            Analytics Platform
-                                        </ButtonItem>
-                                    </Section>
+                                                >
+                                                    {realm.name}
+                                                </ButtonItem>
 
-                                </MenuGroup>}
-                            >Edit</DropdownItem>
+                                            </Section>
+                                        </MenuGroup>}
+                                    >Edit</DropdownItem>
+
+                                )
+                            }
+
 
                         </DropdownItemGroup>
 
                         <DropdownItemGroup hasSeparator>
-                        <DropdownItem>View All Projects</DropdownItem>
-                            <DropdownItem onClick={()=> DynoDialog.Show(AddProjectDialog())}>Create Project</DropdownItem>
+                            <DropdownItem onClick={() => navigate('projects')}>View All Projects</DropdownItem>
+                            <DropdownItem onClick={() => DynoDialog.Show(AddProjectDialog(organization.$id))}>Create Project</DropdownItem>
                         </DropdownItemGroup>
                     </DropdownMenu>,
                     <PrimaryButton>Your work</PrimaryButton>,
@@ -149,7 +160,7 @@ export const Navigation= ()=>{
                 renderAppSwitcher={DefaultAppSwitcher}
                 renderProductHome={AtlassianProductHome}
             />
-        )
-    }
+    )
+}
 
 

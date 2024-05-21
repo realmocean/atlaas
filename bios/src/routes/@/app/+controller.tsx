@@ -16,7 +16,7 @@ export class HomeController extends UIController {
                 const { memberships, isLoading } = useListAccountMemberships('console');
                 return ( 
                     !isLoading && memberships.length > 0 ? 
-                    UINavigate(`/app/${urlFriendly(memberships[0].teamName)}-${memberships[0].$id}`)
+                    UINavigate(`/app/${urlFriendly(memberships[0].teamName)}-${memberships[0].teamId}`)
                     :
                     UINavigate('/organizatiion-not-found')
 
