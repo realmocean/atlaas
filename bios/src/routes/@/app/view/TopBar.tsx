@@ -21,6 +21,8 @@ import { NotificationIndicator } from '@atlaskit/notification-indicator';
 import DropdownMenu, { DropdownItem, DropdownItemGroup } from '@atlaskit/dropdown-menu';
 import Popup from '@atlaskit/popup';
 import { Box, xcss } from '@atlaskit/primitives';
+import { DynoDialog } from "../../../../FormBuilder/DynoDialog";
+import { AddProjectDialog } from "../../../../dialogs/AddProjectDialog";
 
 const DefaultAppSwitcher = () => <AppSwitcher tooltip="Switch to..." />;
 
@@ -121,7 +123,7 @@ export const Navigation= ()=>{
 
                         <DropdownItemGroup hasSeparator>
                         <DropdownItem>View All Projects</DropdownItem>
-                            <DropdownItem onClick={()=> alert('')}>Create Project</DropdownItem>
+                            <DropdownItem onClick={()=> DynoDialog.Show(AddProjectDialog())}>Create Project</DropdownItem>
                         </DropdownItemGroup>
                     </DropdownMenu>,
                     <PrimaryButton>Your work</PrimaryButton>,
