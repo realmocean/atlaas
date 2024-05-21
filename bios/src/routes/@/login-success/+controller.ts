@@ -1,6 +1,6 @@
 
-import { useCreateOrganization, useDeleteCache, useGetOrganization, useUpdatePrefs } from "@realmocean/sdk";
-import { UIController, UINavigate, UIView, useNavigate } from "@tuval/forms";
+import { useCreateOrganization, useDeleteCache, useGetOrganization, useGetTeamMembership, useListAccountMemberships, useUpdatePrefs } from "@realmocean/sdk";
+import { Text, UIController, UINavigate, UIView, useNavigate } from "@tuval/forms";
 import { useAccount } from "../../../context/account";
 
 export class LoginSuccess extends UIController {
@@ -14,6 +14,7 @@ export class LoginSuccess extends UIController {
         const { updatePrefs } = useUpdatePrefs({});
         const { deleteCache } = useDeleteCache('console');
 
+       
         return (
 
             /* isLoading ? Fragment() :
@@ -36,6 +37,7 @@ export class LoginSuccess extends UIController {
                     :
                     account.prefs?.organization != null ? UINavigate(`/app/organization-${account.prefs?.organization}`) : */
                         UINavigate(`/app`)
+                 
 
 
         )

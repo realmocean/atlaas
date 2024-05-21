@@ -1,7 +1,8 @@
-import { useDeleteSessions, useGetMe } from "@realmocean/sdk";
-import { UIController, UIRouteOutlet, UIScene, UIView, DialogContainer, VStack, Fragment, UINavigate, Text, Button, useNavigate, HStack, cTopLeading, cLeading } from "@tuval/forms";
+import { useCreateOrganization, useCreateTeam, useDeleteSessions, useGetMe, useListAccountMemberships } from "@realmocean/sdk";
+import { UIController, UIRouteOutlet, UIScene, UIView, DialogContainer, VStack, Fragment, UINavigate, Text, Button, useNavigate, HStack, cTopLeading, cLeading, useState, nanoid } from "@tuval/forms";
 import { LeftMenu } from "../view/LeftMenu";
-import { Navigation } from "@realmocean/atlaskit";
+import { LoadingButton, Navigation, TextField } from "@realmocean/atlaskit";
+import { AccountContext } from "../../../context/account";
 
 
 export class LayoutController extends UIController {
@@ -15,16 +16,41 @@ export class LayoutController extends UIController {
         const { deleteSessions, isError, isSuccess } = useDeleteSessions('console');
 
         return (
+            AccountContext(() => {
+                const { memberships, isLoading } = useListAccountMemberships('console');
+                const { createTeam, isError, isSuccess } = useCreateOrganization();
+                const [name, setName] = useState();
 
-            VStack({ alignment: cTopLeading })(
-                HStack({ alignment: cLeading })(
-                    Navigation("")
-                ).height().display('block'),
-                HStack({ alignment: cTopLeading })(
-                    LeftMenu(),
-                     UIRouteOutlet().width('100%').height('100%') 
-                ).background('yellow')
-            )
+
+                return (isLoading ? Fragment() : memberships.length === 0 ?
+
+                    VStack(
+                        TextField().onBlur((e:any) => setName(e.target.value))
+                            .value(name),
+                        LoadingButton().label('Create Organization')
+                            .onClick(() => {
+                                createTeam({
+                                    id: nanoid(),
+                                    name: name
+                                })
+                            })
+                    )
+
+                    :
+                    VStack({ alignment: cTopLeading })(
+                        HStack({ alignment: cLeading })(
+                            Navigation("")
+                        ).height().display('block'),
+                        UIRouteOutlet().width('100%').height('100%')
+                        /*  HStack({ alignment: cTopLeading })(
+                             LeftMenu(),
+                              UIRouteOutlet().width('100%').height('100%') 
+                         ) */
+                    )
+                )
+
+            })
+
 
         )
     }

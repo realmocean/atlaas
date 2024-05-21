@@ -5,6 +5,11 @@ import { SignupController } from "./@/signup/+controller"
 import { HomeController } from "./@/app/+controller"
 import { LandingController } from "./@/+controller"
 import { LayoutController } from "./@/app/+layout"
+import { OrganizationController } from "./@/app/organization-[organizationId]/+controller"
+import { ProjectController } from "./@/app/organization-[organizationId]/project-[projectId]/+controller"
+import { ScenarioController } from "./@/app/organization-[organizationId]/project-[projectId]/scenario-[scenarioId]/+controller"
+import { ScenariosController } from "./@/app/organization-[organizationId]/project-[projectId]/scenarios/+controller"
+import { LogoutController } from "./@/logout/+controller"
 
 
 class KontDrakula extends UIController {
@@ -27,12 +32,19 @@ export class RoutesController extends BiosController {
             UIRoutes(
                 UIRoute('/', LandingController),
                 UIRoute('/app', LayoutController).children(
+                    UIRoute(':organizationId', OrganizationController).children(
+                        UIRoute(':projectId', ProjectController).children(
+                            UIRoute('[scenarios]',ScenariosController ),
+                            UIRoute('[scenarios]/:scenarioId',ScenarioController )
+                           
+                        )
+                    ),
                     UIRoute('', HomeController),
                     UIRoute('*', HomeController),
                 ),
                 UIRoute('/login', LoginController),
                 UIRoute('/signup', SignupController),
-                UIRoute('/logout', LoginController)
+                UIRoute('/logout', LogoutController)
             )
         )
     }
