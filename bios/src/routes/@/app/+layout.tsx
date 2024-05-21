@@ -1,8 +1,10 @@
 import { useCreateOrganization, useCreateTeam, useDeleteSessions, useGetMe, useListAccountMemberships } from "@realmocean/sdk";
 import { UIController, UIRouteOutlet, UIScene, UIView, DialogContainer, VStack, Fragment, UINavigate, Text, Button, useNavigate, HStack, cTopLeading, cLeading, useState, nanoid } from "@tuval/forms";
 import { LeftMenu } from "../view/LeftMenu";
-import { LoadingButton, Navigation, TextField } from "@realmocean/atlaskit";
+import { LoadingButton,  TextField } from "@realmocean/atlaskit";
 import { AccountContext } from "../../../context/account";
+import { Navigation } from "./view/TopBar";
+import React from "react";
 
 
 export class LayoutController extends UIController {
@@ -38,8 +40,8 @@ export class LayoutController extends UIController {
 
                     :
                     VStack({ alignment: cTopLeading })(
-                        HStack({ alignment: cLeading })(
-                            Navigation("")
+                        VStack(
+                           <Navigation></Navigation>
                         ).height().display('block'),
                         UIRouteOutlet().width('100%').height('100%')
                         /*  HStack({ alignment: cTopLeading })(
