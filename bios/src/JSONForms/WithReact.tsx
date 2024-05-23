@@ -21,6 +21,7 @@ import React from "react";
 import Textfield from "@atlaskit/textfield";
 import { FieldText } from "./fields/FieldText";
 import { HStack, VStack, cTopLeading } from "@tuval/forms";
+import { FieldMultiline } from "./fields/FieldMultiline";
 
 
 
@@ -29,17 +30,16 @@ const fieldsMap = {
     text: FieldText,
     number: FieldNumber,
     radio: FieldRadio,
-    error: FieldUnknown
+    error: FieldUnknown,
+    multiline: FieldMultiline
 };
 
-const initialValuesFromAPI = {
-    name: 'Mega team'
-}
 
-export function WithReact({ schema, handleSubmit }) {
+
+export function WithReact({ schema, initialValues, handleSubmit }) {
     const { fields, handleValidation } = createHeadlessForm(schema, {
         strictInputType: false, // so you don't need to pass presentation.inputType,
-        initialValues: initialValuesFromAPI,
+        initialValues: initialValues,
     });
     async function handleOnSubmit(jsonValues, { formValues }) {
         handleSubmit({ formValues, jsonValues });
@@ -54,20 +54,17 @@ export function WithReact({ schema, handleSubmit }) {
     }
 
     return (
-        <article>
-            <h1>{schema['title']}</h1>
-            {/* <p>This demo uses React without any other Form library.</p> */}
-            <br />
-
+        VStack({ alignment: cTopLeading })(
+            <h1>{schema['title']}</h1>,
             <SmartForm
                 name={'dsf'}
                 onSubmit={handleOnSubmit}
                 // From JSF
                 fields={fields}
-                initialValues={initialValuesFromAPI}
+                initialValues={initialValues}
                 handleValidation={handleValidation}
             />
-        </article>
+        ).render()
     );
 }
 
@@ -119,10 +116,10 @@ function SmartForm({ name, fields, initialValues, handleValidation, onSubmit }) 
     }
 
     return (
-        <form name={name} onSubmit={handleSubmit} style={{ height: '100%' }} noValidate>
+        <form name={name} onSubmit={handleSubmit} style={{ height: '100%', width: '100%' }} noValidate>
             {
                 VStack(
-                    VStack({ alignment: cTopLeading })(
+                    VStack({ alignment: cTopLeading, spacing: 15 })(
                         fields?.map((field) => {
                             const { name: fieldName, inputType } = field;
                             const FieldComponent = fieldsMap[inputType] || fieldsMap.error;
@@ -143,7 +140,7 @@ function SmartForm({ name, fields, initialValues, handleValidation, onSubmit }) 
                         <LoadingButton type="submit" appearance="primary" isLoading={false}>
                             Save
                         </LoadingButton>
-                    ).allHeight(200)
+                    ).allHeight(50)
                 ).render()
             }
         </form>

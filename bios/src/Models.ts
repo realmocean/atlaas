@@ -12,5 +12,6 @@ export namespace Models {
     export interface Form {
         $id: string;
         name: string;
+        description: string;
     }
 }

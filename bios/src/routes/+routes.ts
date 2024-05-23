@@ -19,6 +19,7 @@ import { TemplatesController } from "./@/app/organization-[organizationId]/proje
 import { ConnectionsController } from "./@/app/organization-[organizationId]/project-[projectId]/connections/+controller"
 import { WebhooksController } from "./@/app/organization-[organizationId]/project-[projectId]/webhooks/+controller"
 import { KeysController } from "./@/app/organization-[organizationId]/project-[projectId]/keys/+controller"
+import { FormController } from "./@/app/organization-[organizationId]/project-[projectId]/form-[formId]/+controller"
 
 
 class KontDrakula extends UIController {
@@ -46,6 +47,7 @@ export class RoutesController extends BiosController {
                         UIRoute(':projectId', ProjectController).children(
                             UIRoute('[devices]',DevicesController),
                             UIRoute('[forms]',FormsController),
+                            UIRoute('[forms]/:formId',FormController ),
                             UIRoute('[scenarios]',ScenariosController ),
                             UIRoute('[scenarios]/:scenarioId',ScenarioController ),
                             UIRoute('[datastores]',DataStoresController ),

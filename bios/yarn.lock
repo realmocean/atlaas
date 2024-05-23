@@ -4983,6 +4983,33 @@
     trackjs "^3.10.1"
     usehooks-ts "^3.1.0"
 
+"@tuval/forms@^1.0.196":
+  version "1.0.196"
+  resolved "https://registry.yarnpkg.com/@tuval/forms/-/forms-1.0.196.tgz#df859a6181a5a6c36b5ebb009999a27f5e81058f"
+  integrity sha512-A5ctv24MELH6IeFc7YNMsFxXPtIOmXa6ICl6PgYIKoTjg3n6nnfqCnuq4DKsliLJLL1n+DkQRSchM3KuASOwuQ==
+  dependencies:
+    "@codemirror/lang-json" "^6.0.1"
+    "@dnd-kit/core" "^6.0.8"
+    "@dnd-kit/modifiers" "^6.0.1"
+    "@dnd-kit/sortable" "^7.0.2"
+    "@dnd-kit/utilities" "^3.2.1"
+    "@tanstack/react-query" "^4.35.7"
+    "@types/react" "^18.0.27"
+    dayjs "^1.11.9"
+    handlebars "^4.7.7"
+    history "^5.3.0"
+    http-server "^14.1.1"
+    json-beautify "^1.1.1"
+    monday-ui-react-core "^2.82.0"
+    nanoid "^4.0.2"
+    object-path "^0.11.8"
+    primereact "10.2.1"
+    react "^18.2.0"
+    react-dom "^18.2.0"
+    react-sortable-hoc "^2.0.0"
+    trackjs "^3.10.1"
+    usehooks-ts "^3.1.0"
+
 "@tuval/graphics@^0.0.11":
   version "0.0.11"
   resolved "https://registry.npmjs.org/@tuval/graphics/-/graphics-0.0.11.tgz"
@@ -8051,6 +8078,16 @@ json-buffer@3.0.1:
   resolved "https://registry.npmjs.org/json-buffer/-/json-buffer-3.0.1.tgz"
   integrity sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==
 
+json-edit-react@^1.11.0:
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/json-edit-react/-/json-edit-react-1.11.0.tgz#5d077adcedd199038c7a69171f0cc7cae7bf8a48"
+  integrity sha512-FhADxqEXg8ic0iyIH8FMGcpGBm2yoxZNhzKH8uzMTa2UQdzKVxLEAru1Is1lu1X/LQTVpZ42HMCkf030MZ3llg==
+  dependencies:
+    json5 "^2.2.3"
+    just-clone "^6.2.0"
+    object-property-assigner "^1.2.3"
+    object-property-extractor "^1.0.11"
+
 json-ld-types@^4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/json-ld-types/-/json-ld-types-4.1.1.tgz#a5afd52a20e5ecf3acc9de66a37af3798540ca91"
@@ -8080,7 +8117,7 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-json5@^2.2.2:
+json5@^2.2.2, json5@^2.2.3:
   version "2.2.3"
   resolved "https://registry.npmjs.org/json5/-/json5-2.2.3.tgz"
   integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
@@ -8093,6 +8130,11 @@ jsonfile@^6.0.1:
     universalify "^2.0.0"
   optionalDependencies:
     graceful-fs "^4.1.6"
+
+just-clone@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/just-clone/-/just-clone-6.2.0.tgz#a4614d9bf7e4bbdcae7f9ba904aea5ea9cae8ae5"
+  integrity sha512-1IynUYEc/HAwxhi3WDpIpxJbZpMCvvrrmZVqvj9EhpvbH8lls7HhdhiByjL7DkAaWlLIzpC0Xc/VPvy/UxLNjA==
 
 keyv@^4.5.3:
   version "4.5.4"
@@ -8651,6 +8693,16 @@ object-path@^0.11.8:
   version "0.11.8"
   resolved "https://registry.npmjs.org/object-path/-/object-path-0.11.8.tgz"
   integrity sha512-YJjNZrlXJFM42wTBn6zgOJVar9KFJvzx6sTWDte8sWZF//cnjl0BxHNpfZx+ZffXX63A9q0b1zsFiBX4g4X5KA==
+
+object-property-assigner@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/object-property-assigner/-/object-property-assigner-1.2.3.tgz#73389a071ec5d1bb1117bb02c846727b892e3f9e"
+  integrity sha512-+9sLdS0jr2kjl5HskuX6/Fxvlyt9mfex3TbbjLPRdEXd+zAtAxrzv7fJz/2Q3mag9dclDrgjgwD+uEO1bHNEpA==
+
+object-property-extractor@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/object-property-extractor/-/object-property-extractor-1.0.11.tgz#53cd9661266b4d6b5c7d32197b1824d2c5ecea60"
+  integrity sha512-VnDQcyN0FTXZ0hMZS/CTb2QkIssZ9XKB8zlf5rnFh1HjFQX1P73EHawavSztBOiPDGqAPNXebv4agjhF9eACAw==
 
 object.assign@^4.1.0, object.assign@^4.1.2, object.assign@^4.1.4:
   version "4.1.5"

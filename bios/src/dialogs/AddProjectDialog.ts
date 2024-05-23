@@ -2,7 +2,7 @@ import { LoadingButton, useFormState } from "@realmocean/atlaskit";
 import { SchemaBroker, useCreateDocument, useCreateRealm } from "@realmocean/sdk";
 import { EventBus } from "@tuval/core";
 import { UIViewBuilder, useFormController, useDialog, useFormBuilder, useNavigate, Button, Text, nanoid } from "@tuval/forms";
-import { FormBuilder } from "../FormBuilder/FormBuilder";
+
 import { useOrganization } from "../context/organization/context";
 import { Schema } from "../schema/schema";
 
@@ -31,8 +31,23 @@ export const SaveDocumentAction = (formMeta, action) => UIViewBuilder(() => {
     });
 
     return (
-        LoadingButton().appearance("primary").label('Save')
-            // .loading(isLoading)
+        Button(
+            Text('Save')
+        )
+        .onClick(()=> {
+            const data = formData?.values ?? {};
+
+
+            createRealm({ realmId: nanoid(), name: data.name, organizationId: organizationId }, async (realm)=> {
+
+                SchemaBroker.Default
+                .setRealm(realm.$id);
+                await SchemaBroker.Default.create(null,Schema);
+                dialog.Hide();
+            })
+        })
+       /*  LoadingButton().appearance("primary").label('Save')
+          
             .onClick(() => {
 
                 const data = formData?.values ?? {};
@@ -46,7 +61,7 @@ export const SaveDocumentAction = (formMeta, action) => UIViewBuilder(() => {
                     dialog.Hide();
                 })
 
-            })
+            }) */
     )
 }
 )
@@ -91,5 +106,3 @@ export const AddProjectDialog = (organizationId: string) => {
     }
 
 }
-
-FormBuilder.injectAction(SaveDocumentAction);

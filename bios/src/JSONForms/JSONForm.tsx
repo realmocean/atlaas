@@ -33,14 +33,17 @@ export class JSONForm extends DialogView {
     public override LoadView() {
         return (this.form == null ? Spinner() :
 
-            ReactView(
-                <WithReact schema={this.form} handleSubmit={({ formValues, jsonValues }) => {
-                    this.Hide();
-                    this.ShowDialogAsyncResolve({ formValues, jsonValues });
-                    
-                }
-                }></WithReact>
-            )
+        VStack(
+            <WithReact schema={this.form} initialValues={{}} handleSubmit={({ formValues, jsonValues }) => {
+                this.Hide();
+                this.ShowDialogAsyncResolve({ formValues, jsonValues });
+                
+            }
+            }></WithReact>
+        )
+        .display('block')
+        .padding('var(--page-padding)')
+            
 
         )
     }

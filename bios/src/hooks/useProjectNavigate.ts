@@ -16,7 +16,7 @@ export const useProjectNavigate = (): { navigate: Function } => {
                 url = '/' + url;
             }
 
-            navigate(`/app/${urlFriendly(organization.name)}-${organization.$id}/${urlFriendly(project.name)}-${project.$id}${url}`)
+             navigate(`/app/${urlFriendly(organization.name)}-${organization.$id}/${urlFriendly(project.name)}-${project.$id}${url}`)
 
         }
     }

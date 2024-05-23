@@ -1,30 +1,22 @@
-import { Label } from "@atlaskit/form";
-import Textfield from "@atlaskit/textfield";
-import { HStack, Icon, Text, UIImage, UIView, ViewProperty, cLeading } from "@tuval/forms";
-import React, { FormEventHandler, useState } from "react";
-import { Fragment } from "react";
-import Avatar from '@atlaskit/avatar';
-import { ButtonItem, MenuGroup, Section } from '@atlaskit/menu';
 import {
     AppSwitcher,
     AtlassianNavigation,
     Notifications,
-    PrimaryButton,
     PrimaryDropdownButton,
     ProductHome,
     Profile,
     Search,
+    Settings
 } from '@atlaskit/atlassian-navigation';
-import { AtlassianIcon, AtlassianLogo } from '@atlaskit/logo';
-import { Settings } from '@atlaskit/atlassian-navigation';
-import { NotificationIndicator } from '@atlaskit/notification-indicator';
+import Avatar from '@atlaskit/avatar';
 import DropdownMenu, { DropdownItem, DropdownItemGroup } from '@atlaskit/dropdown-menu';
-import Popup from '@atlaskit/popup';
-import { Box, xcss } from '@atlaskit/primitives';
-import { DynoDialog } from "../../../../../FormBuilder/DynoDialog";
-import { AddProjectDialog } from "../../../../../dialogs/AddProjectDialog";
-import { useOrganization } from "../../../../../context/organization/context";
+import { ButtonItem, MenuGroup, Section } from '@atlaskit/menu';
+import { NotificationIndicator } from '@atlaskit/notification-indicator';
 import { useListRealms } from "@realmocean/sdk";
+import { UIImage } from "@tuval/forms";
+import React, { Fragment, useState } from "react";
+import { useOrganization } from "../../../../../context/organization/context";
+import { AddProjectDialog } from "../../../../../dialogs/AddProjectDialog";
 import { useOrganizationNavigate } from "../../../../../hooks/useOrganizationNavigate";
 
 const DefaultAppSwitcher = () => <AppSwitcher tooltip="Switch to..." />;
@@ -97,16 +89,16 @@ export const Navigation = () => {
     const [open, setOpen] = useState(false)
 
     const AtlassianProductHome = () => (
-    
+
         <ProductHome icon={Logo as any} href='/' siteTitle={organization.name} logo={Logo as any} />
-      /*   HStack({spacing: 7})(
-            Icon(Logo),
-            Text(organization.name).fontSize(14).fontWeight('500'),
-            VDivider().width(1).height('50%').background('#DCDFE4').marginLeft(2)
-        )
-        .padding(cHorizontal, 5)
-        .width()
-        .render() */
+        /*   HStack({spacing: 7})(
+              Icon(Logo),
+              Text(organization.name).fontSize(14).fontWeight('500'),
+              VDivider().width(1).height('50%').background('#DCDFE4').marginLeft(2)
+          )
+          .padding(cHorizontal, 5)
+          .width()
+          .render() */
     );
 
     return (
@@ -149,12 +141,23 @@ export const Navigation = () => {
 
                         <DropdownItemGroup hasSeparator>
                             <DropdownItem onClick={() => navigate('projects')}>View All Projects</DropdownItem>
-                            <DropdownItem onClick={() => DynoDialog.Show(AddProjectDialog(organization.$id))}>Create Project</DropdownItem>
+                            <DropdownItem /* onClick={() => DynoDialog.Show(AddProjectDialog(organization.$id))} */>Create Project</DropdownItem>
                         </DropdownItemGroup>
                     </DropdownMenu>,
-                    <PrimaryButton>Your work</PrimaryButton>,
-                    <PrimaryDropdownButton >Issues</PrimaryDropdownButton>,
-                    <PrimaryDropdownButton>Projects</PrimaryDropdownButton>,
+                    <DropdownMenu  autoFocus={false} trigger={({ triggerRef, ...props }) => <PrimaryDropdownButton {...props} ref={triggerRef}>Organization</PrimaryDropdownButton>}
+                        shouldRenderToParent>
+                        <DropdownItemGroup>
+                            <DropdownItem onClick={() => navigate('projects')}>My Organization</DropdownItem>
+                            <DropdownItem /* onClick={() => DynoDialog.Show(AddProjectDialog(organization.$id))} */>Teams</DropdownItem>
+                        </DropdownItemGroup>
+                    </DropdownMenu>,
+                    <DropdownMenu  autoFocus={false} trigger={({ triggerRef, ...props }) => <PrimaryDropdownButton {...props} ref={triggerRef}>Help</PrimaryDropdownButton>}
+                    shouldRenderToParent>
+                    <DropdownItemGroup>
+                        <DropdownItem onClick={() => navigate('projects')}>My Organization</DropdownItem>
+                        <DropdownItem /* onClick={() => DynoDialog.Show(AddProjectDialog(organization.$id))} */>Teams</DropdownItem>
+                    </DropdownItemGroup>
+                </DropdownMenu>,
                     /*   <DropdownMenu trigger="Page actions" shouldRenderToParent>
                           <DropdownItemGroup>
                               <DropdownItem>Edit</DropdownItem>

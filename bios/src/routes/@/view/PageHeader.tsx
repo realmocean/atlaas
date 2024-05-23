@@ -55,6 +55,13 @@ class PageHeaderClass extends UIView {
         return this;
     }
 
+      /** @internal */
+      @ViewProperty() vp_ShowFilter: boolean;
+      public showFilter(value: boolean) {
+          this.vp_ShowFilter = value;
+          return this;
+      }
+
     public override render() {
         const { project } = useProject();
         //  const { realms, isLoading } = useListRealms();
@@ -64,7 +71,7 @@ class PageHeaderClass extends UIView {
             <Breadcrumbs onExpand={__noop}>
                 {
                     this.vp_breadcrumbs?.map(b =>
-                        <BreadcrumbsItem text={b.title} key={b.title} />
+                        <BreadcrumbsItem text={b.title} key={b.title} onClick={()=> b.onClick ? b.onClick() : void 0}/>
                     )
                 }
 
@@ -99,7 +106,7 @@ class PageHeaderClass extends UIView {
                     <APageHeader
                         breadcrumbs={breadcrumbs}
                         actions={actionsContent}
-                        bottomBar={barContent}
+                        bottomBar={this.vp_ShowFilter ? barContent : null}
                     >
                         <InlineTitle title={this.vp_PageTitle}></InlineTitle>
                     </APageHeader>
@@ -107,7 +114,7 @@ class PageHeaderClass extends UIView {
             )
                 .height()
                 .background('white')
-                .padding(cHorizontal, 'var(--page-padding)')
+               // .padding(cHorizontal, 'var(--page-padding)')
                 .render()
         )
     }
