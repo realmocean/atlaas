@@ -8,4 +8,9 @@ export namespace Models {
         $id: string;
         name: string;
     }
+
+    export interface Form {
+        $id: string;
+        name: string;
+    }
 }

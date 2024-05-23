@@ -20,7 +20,7 @@ import {
 import React from "react";
 import Textfield from "@atlaskit/textfield";
 import { FieldText } from "./fields/FieldText";
-import { VStack } from "@tuval/forms";
+import { HStack, VStack, cTopLeading } from "@tuval/forms";
 
 
 
@@ -122,7 +122,7 @@ function SmartForm({ name, fields, initialValues, handleValidation, onSubmit }) 
         <form name={name} onSubmit={handleSubmit} style={{ height: '100%' }} noValidate>
             {
                 VStack(
-                    VStack(
+                    VStack({ alignment: cTopLeading })(
                         fields?.map((field) => {
                             const { name: fieldName, inputType } = field;
                             const FieldComponent = fieldsMap[inputType] || fieldsMap.error;
@@ -139,9 +139,11 @@ function SmartForm({ name, fields, initialValues, handleValidation, onSubmit }) 
                             );
                         })
                     ),
-                    <LoadingButton type="submit" appearance="primary" isLoading={false}>
-                        Save
-                    </LoadingButton>
+                    VStack(
+                        <LoadingButton type="submit" appearance="primary" isLoading={false}>
+                            Save
+                        </LoadingButton>
+                    ).allHeight(200)
                 ).render()
             }
         </form>
