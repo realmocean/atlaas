@@ -41,6 +41,14 @@ class PageHeaderClass extends UIView {
     }
 
     /** @internal */
+    @ViewProperty() vp_OnActionButtonClick: Function;
+    public onActionButtonClick(value: Function) {
+        this.vp_OnActionButtonClick = value;
+        return this;
+    }
+
+
+    /** @internal */
     @ViewProperty() vp_breadcrumbs: BreadcrumbInfo[];
     public breadcrumbs(value: BreadcrumbInfo[]) {
         this.vp_breadcrumbs = value;
@@ -65,7 +73,7 @@ class PageHeaderClass extends UIView {
         );
         const actionsContent = (
             <ButtonGroup label="Content actions">
-                <Button appearance="primary">Create</Button>
+                <Button appearance="primary" onClick={()=> this.vp_OnActionButtonClick()} >Create</Button>
                 <Button>Share</Button>
                 <Button>...</Button>
             </ButtonGroup>

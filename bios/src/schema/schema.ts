@@ -27,6 +27,23 @@ export const Schema = {
                     ]
                 }
             ]
+        },
+        {
+            "name": "Forms",
+            "id": "forms",
+            "category": "app",
+            "collections": [
+                {
+                    "name": "Forn",
+                    "id": "form",
+                    "attributes": [
+                        {
+                            "key": "name",
+                            "type": "string"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

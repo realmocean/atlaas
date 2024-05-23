@@ -39,7 +39,7 @@ const opts = {
 const webConfig = {
     //  target: 'web',
     //target: 'es5',
-     mode: 'development',
+    mode: 'development',
     // devtool: 'source-map',  
     entry: './src/index.tsx',
     externals: {
@@ -85,7 +85,7 @@ const webConfig = {
         '@realmocean/atlaskit': 'realmocean$atlaskit',
         '@realmocean/sdk': 'realmocean$sdk',
         '@realmocean/ui': 'realmocean$ui',
-        '@realmocean/atlaas':'realmocean$atlaas',
+        '@realmocean/atlaas': 'realmocean$atlaas',
         '@celmino/platform': 'celmino$platform',
 
         'react': 'tuval$react',
