@@ -35,8 +35,9 @@ export class JSONForm extends DialogView {
 
             ReactView(
                 <WithReact schema={this.form} handleSubmit={({ formValues, jsonValues }) => {
-                    this.ShowDialogAsyncResolve({ formValues, jsonValues });
                     this.Hide();
+                    this.ShowDialogAsyncResolve({ formValues, jsonValues });
+                    
                 }
                 }></WithReact>
             )
