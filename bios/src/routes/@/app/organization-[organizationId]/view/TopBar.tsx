@@ -98,7 +98,7 @@ export const Navigation = () => {
 
     const AtlassianProductHome = () => (
     
-        <ProductHome icon={AppLogo} href='/' siteTitle={organization.name} logo={Logo as any} />
+        <ProductHome icon={Logo as any} href='/' siteTitle={organization.name} logo={Logo as any} />
       /*   HStack({spacing: 7})(
             Icon(Logo),
             Text(organization.name).fontSize(14).fontWeight('500'),

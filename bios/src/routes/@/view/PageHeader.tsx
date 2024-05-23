@@ -93,10 +93,11 @@ class PageHeaderClass extends UIView {
                         actions={actionsContent}
                         bottomBar={barContent}
                     >
-                        <InlineTitle title={ this.vp_PageTitle}></InlineTitle>
+                        <InlineTitle title={this.vp_PageTitle}></InlineTitle>
                     </APageHeader>
                 ).height().display('block')
             )
+                .height()
                 .background('white')
                 .padding(cHorizontal, 'var(--page-padding)')
                 .render()

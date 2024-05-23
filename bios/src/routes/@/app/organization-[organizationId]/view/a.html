@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Schema Form Renderer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="form-container"></div>
+    <button onclick="submitForm()">Submit</button>
+
+    <script>
+        const schema = {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "title": "Example Schema",
+            "type": "object",
+            "properties": {
+                "firstName": { "type": "string", "title": "First Name" },
+                "lastName": { "type": "string", "title": "Last Name" },
+                "age": { "type": "integer", "title": "Age" },
+                "isStudent": { "type": "boolean", "title": "Are you a student?" },
+                "grade": { "type": "string", "title": "Grade", "enum": ["A", "B", "C", "D", "F"] },
+                "address": {
+                    "type": "object",
+                    "title": "Address",
+                    "properties": {
+                        "street": { "type": "string", "title": "Street" },
+                        "city": { "type": "string", "title": "City" },
+                        "zipCode": { "type": "string", "title": "Zip Code" }
+                    }
+                }
+            },
+            "required": ["firstName", "lastName"],
+            "if": {
+                "properties": { "isStudent": { "const": true } }
+            },
+            "then": {
+                "required": ["grade"]
+            },
+            "else": {
+                "properties": {
+                    "employmentStatus": { "type": "string", "title": "Employment Status" }
+                }
+            }
+        };
+
+        function createForm(schema, container) {
+            for (const key in schema.properties) {
+                if (schema.properties.hasOwnProperty(key)) {
+                    const field = schema.properties[key];
+                    const formGroup = document.createElement('div');
+                    formGroup.className = 'form-group';
+
+                    const label = document.createElement('label');
+                    label.textContent = field.title || key;
+                    formGroup.appendChild(label);
+
+                    let input;
+                    switch (field.type) {
+                        case 'string':
+                            input = document.createElement('input');
+                            input.type = 'text';
+                            break;
+                        case 'integer':
+                            input = document.createElement('input');
+                            input.type = 'number';
+                            break;
+                        case 'boolean':
+                            input = document.createElement('input');
+                            input.type = 'checkbox';
+                            input.onchange = handleConditionalFields;
+                            break;
+                        case 'object':
+                            createForm(field, formGroup);
+                            break;
+                        case 'array':
+                            input = document.createElement('select');
+                            field.enum.forEach(optionValue => {
+                                const option = document.createElement('option');
+                                option.value = optionValue;
+                                option.textContent = optionValue;
+                                input.appendChild(option);
+                            });
+                            break;
+                        default:
+                            input = document.createElement('input');
+                            input.type = 'text';
+                    }
+
+                    if (input) {
+                        input.name = key;
+                        formGroup.appendChild(input);
+                    }
+
+                    container.appendChild(formGroup);
+                }
+            }
+        }
+
+        function handleConditionalFields() {
+            const isStudentCheckbox = document.querySelector('input[name="isStudent"]');
+            const gradeField = document.querySelector('input[name="grade"]');
+            const employmentStatusField = document.querySelector('input[name="employmentStatus"]');
+
+            if (isStudentCheckbox.checked) {
+                if (!gradeField) {
+                    const gradeGroup = document.createElement('div');
+                    gradeGroup.className = 'form-group';
+
+                    const label = document.createElement('label');
+                    label.textContent = 'Grade';
+                    gradeGroup.appendChild(label);
+
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = 'grade';
+                    gradeGroup.appendChild(input);
+
+                    document.getElementById('form-container').appendChild(gradeGroup);
+                }
+                if (employmentStatusField) {
+                    employmentStatusField.parentNode.remove();
+                }
+            } else {
+                if (!employmentStatusField) {
+                    const employmentGroup = document.createElement('div');
+                    employmentGroup.className = 'form-group';
+
+                    const label = document.createElement('label');
+                    label.textContent = 'Employment Status';
+                    employmentGroup.appendChild(label);
+
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = 'employmentStatus';
+                    employmentGroup.appendChild(input);
+
+                    document.getElementById('form-container').appendChild(employmentGroup);
+                }
+                if (gradeField) {
+                    gradeField.parentNode.remove();
+                }
+            }
+        }
+
+        function submitForm() {
+            const formData = {};
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                if (input.type === 'checkbox') {
+                    formData[input.name] = input.checked;
+                } else {
+                    formData[input.name] = input.value;
+                }
+            });
+            console.log('Form Data:', formData);
+        }
+
+        const formContainer = document.getElementById('form-container');
+        createForm(schema, formContainer);
+    </script>
+</body>
+</html>
