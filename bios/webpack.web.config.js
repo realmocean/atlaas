@@ -39,7 +39,7 @@ const opts = {
 const webConfig = {
     //  target: 'web',
     //target: 'es5',
-    mode: 'development',
+     mode: 'development',
     // devtool: 'source-map',  
     entry: './src/index.tsx',
     externals: {

@@ -67,6 +67,7 @@ services:
       - realmocean-config:/storage/config:rw
       - realmocean-certificates:/storage/certificates:rw
       - realmocean-functions:/storage/functions:rw
+      - ./realmocean/index.html:/usr/src/code/app/realmocean/realm/index.html
       - ./realmocean/system:/usr/src/code/app/realmocean/system
       - ./realmocean/images:/usr/src/code/app/realmocean/images
     depends_on:

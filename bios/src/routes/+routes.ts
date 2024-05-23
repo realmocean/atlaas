@@ -12,6 +12,13 @@ import { ScenariosController } from "./@/app/organization-[organizationId]/proje
 import { LogoutController } from "./@/logout/+controller"
 import { ProjectsController } from "./@/app/organization-[organizationId]/projects/+controller"
 import { FormsController } from "./@/app/organization-[organizationId]/project-[projectId]/forms/+controller"
+import { DevicesController } from "./@/app/organization-[organizationId]/project-[projectId]/devices/+controller"
+import { DataStoresController } from "./@/app/organization-[organizationId]/project-[projectId]/datastores/+controller"
+import { DataSchemasController } from "./@/app/organization-[organizationId]/project-[projectId]/dataschemas/+controller"
+import { TemplatesController } from "./@/app/organization-[organizationId]/project-[projectId]/templates/+controller"
+import { ConnectionsController } from "./@/app/organization-[organizationId]/project-[projectId]/connections/+controller"
+import { WebhooksController } from "./@/app/organization-[organizationId]/project-[projectId]/webhooks/+controller"
+import { KeysController } from "./@/app/organization-[organizationId]/project-[projectId]/keys/+controller"
 
 
 class KontDrakula extends UIController {
@@ -37,9 +44,16 @@ export class RoutesController extends BiosController {
                     UIRoute(':organizationId', OrganizationController).children(
                         UIRoute('projects', ProjectsController),
                         UIRoute(':projectId', ProjectController).children(
-                            UIRoute('[forms]',FormsController ),
+                            UIRoute('[devices]',DevicesController),
+                            UIRoute('[forms]',FormsController),
                             UIRoute('[scenarios]',ScenariosController ),
-                            UIRoute('[scenarios]/:scenarioId',ScenarioController )
+                            UIRoute('[scenarios]/:scenarioId',ScenarioController ),
+                            UIRoute('[datastores]',DataStoresController ),
+                            UIRoute('[dataschemas]',DataSchemasController ),
+                            UIRoute('[templates]',TemplatesController ),
+                            UIRoute('[connections]',ConnectionsController ),
+                            UIRoute('[webhooks]',WebhooksController ),
+                            UIRoute('[keys]',KeysController )
                            
                         )
                     ),

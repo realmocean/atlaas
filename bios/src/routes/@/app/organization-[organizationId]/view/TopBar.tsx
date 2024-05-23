@@ -1,6 +1,6 @@
 import { Label } from "@atlaskit/form";
 import Textfield from "@atlaskit/textfield";
-import { HStack, Text, UIImage, UIView, ViewProperty, cLeading } from "@tuval/forms";
+import { HStack, Icon, Text, UIImage, UIView, ViewProperty, cLeading } from "@tuval/forms";
 import React, { FormEventHandler, useState } from "react";
 import { Fragment } from "react";
 import Avatar from '@atlaskit/avatar';
@@ -77,7 +77,7 @@ const AppLogo = () => (
 )
 
 const Logo = ({ appearance, label, size, iconColor, iconGradientStart, iconGradientStop, textColor, testId, }) => (
-    UIImage('/images/logo.png').allHeight(35).render()
+    UIImage('/images/logo.png').allHeight(30).render()
 )
 /* const AtlassianProductHome = () => (
     HStack({ alignment: cLeading, spacing: 5 })(
@@ -88,15 +88,26 @@ const Logo = ({ appearance, label, size, iconColor, iconGradientStart, iconGradi
         .render()
 ); */
 
-const AtlassianProductHome = () => (
-    <ProductHome icon={AtlassianIcon} logo={Logo as any} />
-);
+
 
 export const Navigation = () => {
     const { organization } = useOrganization();
     const { realms, isLoading } = useListRealms();
     const { navigate } = useOrganizationNavigate();
     const [open, setOpen] = useState(false)
+
+    const AtlassianProductHome = () => (
+    
+        <ProductHome icon={AppLogo} href='/' siteTitle={organization.name} logo={Logo as any} />
+      /*   HStack({spacing: 7})(
+            Icon(Logo),
+            Text(organization.name).fontSize(14).fontWeight('500'),
+            VDivider().width(1).height('50%').background('#DCDFE4').marginLeft(2)
+        )
+        .padding(cHorizontal, 5)
+        .width()
+        .render() */
+    );
 
     return (
         isLoading ? <Fragment /> :
@@ -107,26 +118,30 @@ export const Navigation = () => {
                         shouldRenderToParent>
                         <DropdownItemGroup>
                             {
-                                realms.map(realm =>
-                                    <DropdownItem
-                                        component={({ children, ...props }, ref) => <MenuGroup>
-                                            <Section title="Recent">
-                                                <ButtonItem
-                                                    description="Next-gen software project"
-                                                    onClick={() => {
-                                                        navigate(`${realm.name}-${realm.$id}`);
-                                                        setOpen(false);
-                                                    }}
 
-                                                >
-                                                    {realm.name}
-                                                </ButtonItem>
+                                <DropdownItem
+                                    component={({ children, ...props }, ref) => <MenuGroup>
+                                        <Section title="Recent">
+                                            {
+                                                realms.map(realm =>
+                                                    <ButtonItem
+                                                        description="Next-gen software project"
+                                                        onClick={() => {
+                                                            navigate(`${realm.name}-${realm.$id}/[devices]`);
+                                                            setOpen(false);
+                                                        }}
 
-                                            </Section>
-                                        </MenuGroup>}
-                                    >Edit</DropdownItem>
+                                                    >
+                                                        {realm.name}
+                                                    </ButtonItem>
+                                                )
+                                            }
 
-                                )
+                                        </Section>
+                                    </MenuGroup>}
+                                >Edit</DropdownItem>
+
+
                             }
 
 

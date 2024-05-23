@@ -1,4 +1,5 @@
-import { Button, Fragment, HStack, Heading, HeadingSizes, SecureField, Text, TextField, UIController, UINavigate, UIView, VStack, cLeading, useNavigate, useState } from "@tuval/forms";
+import { Button, Fragment, HStack, Heading, HeadingSizes, SecureField, Text, TextField, UIController, UINavigate, UIView, 
+    VStack, cLeading, useNavigate, useState } from "@tuval/forms";
 import { useCreateAccount, useCreateEmailSession, useGetMe } from "@realmocean/sdk";
 
 export class SignupController extends UIController {
