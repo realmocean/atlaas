@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-
+import { LoadingButton } from '@atlaskit/button';
 
 declare var realmocean$form;
 
@@ -20,6 +20,7 @@ import {
 import React from "react";
 import Textfield from "@atlaskit/textfield";
 import { FieldText } from "./fields/FieldText";
+import { VStack } from "@tuval/forms";
 
 
 
@@ -35,21 +36,21 @@ const initialValuesFromAPI = {
     name: 'Mega team'
 }
 
-export function WithReact({schema, handleSubmit}) {
+export function WithReact({ schema, handleSubmit }) {
     const { fields, handleValidation } = createHeadlessForm(schema, {
         strictInputType: false, // so you don't need to pass presentation.inputType,
         initialValues: initialValuesFromAPI,
     });
     async function handleOnSubmit(jsonValues, { formValues }) {
-        handleSubmit( { formValues, jsonValues });
-       /*  alert(
-            `Submitted with succes! ${JSON.stringify(
-                { formValues, jsonValues },
-                null,
-                3
-            )}`
-        );
-        console.log("Submitted!", { formValues, jsonValues }); */
+        handleSubmit({ formValues, jsonValues });
+        /*  alert(
+             `Submitted with succes! ${JSON.stringify(
+                 { formValues, jsonValues },
+                 null,
+                 3
+             )}`
+         );
+         console.log("Submitted!", { formValues, jsonValues }); */
     }
 
     return (
@@ -75,7 +76,7 @@ export function WithReact({schema, handleSubmit}) {
 // ===============================
 
 function SmartForm({ name, fields, initialValues, handleValidation, onSubmit }) {
-    
+
     const [values, setValues] = useState(() =>
         getDefaultValuesFromFields(fields, initialValues)
     );
@@ -118,26 +119,31 @@ function SmartForm({ name, fields, initialValues, handleValidation, onSubmit }) 
     }
 
     return (
-        <form name={name} onSubmit={handleSubmit} noValidate>
-            <Stack gap="24px">
-                {fields?.map((field) => {
-                    const { name: fieldName, inputType } = field;
-                    const FieldComponent = fieldsMap[inputType] || fieldsMap.error;
+        <form name={name} onSubmit={handleSubmit} style={{ height: '100%' }} noValidate>
+            {
+                VStack(
+                    VStack(
+                        fields?.map((field) => {
+                            const { name: fieldName, inputType } = field;
+                            const FieldComponent = fieldsMap[inputType] || fieldsMap.error;
 
-                    return (
-                        <FieldComponent
-                            key={fieldName}
-                            value={values?.[fieldName]}
-                            error={errors[fieldName]}
-                            submited={submited}
-                            onChange={handleFieldChange}
-                            {...field}
-                        />
-                    );
-                })}
-
-                <button type="submit">Submit</button>
-            </Stack>
+                            return (
+                                <FieldComponent
+                                    key={fieldName}
+                                    value={values?.[fieldName]}
+                                    error={errors[fieldName]}
+                                    submited={submited}
+                                    onChange={handleFieldChange}
+                                    {...field}
+                                />
+                            );
+                        })
+                    ),
+                    <LoadingButton type="submit" appearance="primary" isLoading={false}>
+                        Save
+                    </LoadingButton>
+                ).render()
+            }
         </form>
     );
 }
