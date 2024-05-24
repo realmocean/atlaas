@@ -16,7 +16,7 @@ import { useCreateForm } from "../../../../../../hooks/useCreateForm";
 import { useListForms } from "../../../../../../hooks/useListForms";
 import { IconButton } from '@atlaskit/button/new';
 import MoreIcon from '@atlaskit/icon/glyph/more';
-import { JsonEditor } from 'json-edit-react'
+//import { JsonEditor } from 'json-edit-react'
 import DropdownMenu, { DropdownItem, DropdownItemGroup } from '@atlaskit/dropdown-menu';
 
 export class FormsController extends UIController {
