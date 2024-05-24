@@ -12,12 +12,15 @@ import Avatar from '@atlaskit/avatar';
 import DropdownMenu, { DropdownItem, DropdownItemGroup } from '@atlaskit/dropdown-menu';
 import { ButtonItem, MenuGroup, Section } from '@atlaskit/menu';
 import { NotificationIndicator } from '@atlaskit/notification-indicator';
-import { useListRealms } from "@realmocean/sdk";
-import { UIImage } from "@tuval/forms";
+import { SchemaBroker, useCreateRealm, useListRealms } from "@realmocean/sdk";
+import { UIImage, nanoid } from "@tuval/forms";
 import React, { Fragment, useState } from "react";
 import { useOrganization } from "../../../../../context/organization/context";
 import { AddProjectDialog } from "../../../../../dialogs/AddProjectDialog";
 import { useOrganizationNavigate } from "../../../../../hooks/useOrganizationNavigate";
+import { Schema } from '../../../../../schema/schema';
+import { AddProjectDialogSchema } from '../projects/dialogs/AddProjectDialogSchema';
+import { JSONForm } from '../../../../../JSONForms/JSONForm';
 
 const DefaultAppSwitcher = () => <AppSwitcher tooltip="Switch to..." />;
 
@@ -88,6 +91,8 @@ export const Navigation = () => {
     const { navigate } = useOrganizationNavigate();
     const [open, setOpen] = useState(false)
 
+    const { createRealm } = useCreateRealm();
+
     const AtlassianProductHome = () => (
 
         <ProductHome icon={Logo as any} href='/' siteTitle={organization.name} logo={Logo as any} />
@@ -141,23 +146,40 @@ export const Navigation = () => {
 
                         <DropdownItemGroup hasSeparator>
                             <DropdownItem onClick={() => navigate('projects')}>View All Projects</DropdownItem>
-                            <DropdownItem /* onClick={() => DynoDialog.Show(AddProjectDialog(organization.$id))} */>Create Project</DropdownItem>
+                            <DropdownItem onClick={() => {
+                                JSONForm.Show(AddProjectDialogSchema).then(({ formValues }) => {
+
+                                    const data = formValues;
+
+
+                                    createRealm({ realmId: nanoid(), name: data.name, organizationId: organization.$id }, async (realm) => {
+
+                                        SchemaBroker.Default
+                                            .setRealm(realm.$id);
+                                        await SchemaBroker.Default.create(null, Schema);
+
+                                    })
+
+
+                                    // alert(JSON.stringify(formValues))
+                                })
+                            }}>Create Project</DropdownItem>
                         </DropdownItemGroup>
                     </DropdownMenu>,
-                    <DropdownMenu  autoFocus={false} trigger={({ triggerRef, ...props }) => <PrimaryDropdownButton {...props} ref={triggerRef}>Organization</PrimaryDropdownButton>}
+                    <DropdownMenu autoFocus={false} trigger={({ triggerRef, ...props }) => <PrimaryDropdownButton {...props} ref={triggerRef}>Organization</PrimaryDropdownButton>}
                         shouldRenderToParent>
                         <DropdownItemGroup>
                             <DropdownItem onClick={() => navigate('projects')}>My Organization</DropdownItem>
                             <DropdownItem /* onClick={() => DynoDialog.Show(AddProjectDialog(organization.$id))} */>Teams</DropdownItem>
                         </DropdownItemGroup>
                     </DropdownMenu>,
-                    <DropdownMenu  autoFocus={false} trigger={({ triggerRef, ...props }) => <PrimaryDropdownButton {...props} ref={triggerRef}>Help</PrimaryDropdownButton>}
-                    shouldRenderToParent>
-                    <DropdownItemGroup>
-                        <DropdownItem onClick={() => navigate('projects')}>My Organization</DropdownItem>
-                        <DropdownItem /* onClick={() => DynoDialog.Show(AddProjectDialog(organization.$id))} */>Teams</DropdownItem>
-                    </DropdownItemGroup>
-                </DropdownMenu>,
+                    <DropdownMenu autoFocus={false} trigger={({ triggerRef, ...props }) => <PrimaryDropdownButton {...props} ref={triggerRef}>Help</PrimaryDropdownButton>}
+                        shouldRenderToParent>
+                        <DropdownItemGroup>
+                            <DropdownItem onClick={() => navigate('projects')}>My Organization</DropdownItem>
+                            <DropdownItem /* onClick={() => DynoDialog.Show(AddProjectDialog(organization.$id))} */>Teams</DropdownItem>
+                        </DropdownItemGroup>
+                    </DropdownMenu>,
                     /*   <DropdownMenu trigger="Page actions" shouldRenderToParent>
                           <DropdownItemGroup>
                               <DropdownItem>Edit</DropdownItem>

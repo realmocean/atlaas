@@ -23,6 +23,11 @@ export const Schema = {
                         {
                             "key": "name",
                             "type": "string"
+                        },
+                        {
+                            "key": "description",
+                            "type": "string",
+                            "size": 1245
                         }
                     ]
                 }
