@@ -38,11 +38,11 @@ export class SignupController extends UIController {
                                 createEmailSession({
                                     email: email,
                                     password: password
-                                }, () => navigate('/main'))
+                                }, () => navigate('/app'))
                             })
                         }),
                     isError && Text(error?.message),
-                    isSuccess && UINavigate('/main')
+                    isSuccess && UINavigate('/app')
                 ).width('50%').padding(100)
             )
 

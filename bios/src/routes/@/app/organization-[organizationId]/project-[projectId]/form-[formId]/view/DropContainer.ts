@@ -1,5 +1,7 @@
 import { VStack, Text, HStack, cLeading, UIView, css } from "@tuval/forms";
 import { useField } from "../../../../../../../context/Field/context";
+import { useFormDesigner } from "../../../../../../../context/FormDesigner/context";
+import { Convert } from "@tuval/core";
 
 
 
@@ -34,12 +36,13 @@ const dragClassName = css`
 `
 
 export const DropContainer = (view: UIView) => {
-    const {schema, index} = useField();
+    const { handleDrop, select } = useFormDesigner();
+    const { schema, index } = useField();
     return (
         VStack(
             VStack({ alignment: cLeading, spacing: 10 })(
-               view
-            ) .style(` & {pointer-events: none;}`)
+                view
+            ).style(` & {pointer-events: none;}`)
 
         )
             .height()
@@ -99,21 +102,41 @@ export const DropContainer = (view: UIView) => {
                 const localX = pageX - rect.left - window.scrollX;
                 const localY = pageY - rect.top - window.scrollY;
 
+             
+
                 if (localY < rect.height / 2) {
-                    onDrop('up', schema, index);
-                   /*  formDesignData.splice(index - 1, 0, schema);
-                    setFormDesignData([...formDesignData]); */
+                    handleDrop('up', schema, index);
+                    /*  formDesignData.splice(index - 1, 0, schema);
+                     setFormDesignData([...formDesignData]); */
                 } else {
-                    onDrop('down', schema, index);
-                  /*   formDesignData.splice(index + 1, 0, schema);
-                    setFormDesignData([...formDesignData]); */
+                    handleDrop('down', schema, index);
+                    /*   formDesignData.splice(index + 1, 0, schema);
+                      setFormDesignData([...formDesignData]); */
                 }
 
 
             })
-            .onClick((ev)=> {
+            .onClick((ev) => {
                 const rect = ev.target.getBoundingClientRect();
-                alert(rect.top)
+                const prect = ev.target.offsetParent.getBoundingClientRect();
+
+                const pageX = ev.pageX;
+                const pageY = ev.pageY;
+
+                const localX = pageX - rect.left - window.scrollX;
+                const localY = pageY - rect.top - window.scrollY;
+
+                    
+                
+                select({
+                    pageX:Convert.ToInt32(pageX),
+                    pageY :Convert.ToInt32(pageY),
+                    left: Convert.ToInt32(prect.left - rect.left + 8),
+                    top: Convert.ToInt32( rect.top - prect.top + 14),
+                    width: Convert.ToInt32(rect.width + 2),
+                    height: Convert.ToInt32(rect.height + 2),
+                    schema
+                })
             })
     )
 }

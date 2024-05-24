@@ -9,12 +9,12 @@ import { Models } from "../../Models";
 
 export const ContextFormDesigner = createContext<any>({});
 
-export const useFormDesigner = (): {} => {
+export const useFormDesigner = (): {handleDrop: (yon: string, schema: object, index: number)=> void, select: Function} => {
 
-    const { handleDrop  } = React.useContext(ContextFormDesigner);
+    const { handleDrop, select  } = React.useContext(ContextFormDesigner);
 
 
-    return { handleDrop };
+    return { handleDrop, select };
 }
 
 
@@ -36,6 +36,14 @@ export class FormDesignerContextClass extends UIView {
          return this;
      }
 
+      /** @internal */
+      @ViewProperty() vp_Select: Function;
+
+      public select(value: Function) {
+          this.vp_Select = value;
+          return this;
+      }
+
     public render() {
 
 
@@ -43,7 +51,7 @@ export class FormDesignerContextClass extends UIView {
         return (
             is.function(this.vp_ChildFunc) ?
                 (
-                    <ContextFormDesigner.Provider value={{handleDrop : this.vp_HandleDrop}}>
+                    <ContextFormDesigner.Provider value={{handleDrop : this.vp_HandleDrop, select: this.vp_Select}}>
                         <Proxy control={this}></Proxy>
                     </ContextFormDesigner.Provider>
                 ) : <Fragment />

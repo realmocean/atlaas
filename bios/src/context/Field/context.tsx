@@ -12,8 +12,7 @@ export const ContextField = createContext<any>({});
 export const useField = (): { schema: object, index: number } => {
 
     const { schema, index } = React.useContext(ContextField);
-
-
+   
     return { schema, index };
 }
 
@@ -48,7 +47,7 @@ export class FieldContextClass extends UIView {
         return (
             is.function(this.vp_ChildFunc) ?
                 (
-                    <ContextField.Provider value={{ schema: this.vp_Schema, index: this }}>
+                    <ContextField.Provider value={{ schema: this.vp_Schema, index: this.vp_Index }}>
                         <Proxy control={this}></Proxy>
                     </ContextField.Provider>
                 ) : <Fragment />
