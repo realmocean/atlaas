@@ -9,12 +9,25 @@ import React, { Fragment } from "react";
 import { AddFormDialogSchema } from "../forms/dialogs/AddFormDialog";
 import { JsonEditor } from 'json-edit-react'
 import { useProjectNavigate } from "../../../../../../hooks/useProjectNavigate";
+import { DropContainer } from "./view/DropContainer";
+
+const topBorder = css`
+& {
+   border-top: solid 2px blue;
+}
+
+`
+const bottomBorder = css`
+& {
+   border-bottom: solid 2px blue;
+}
+`
 
 const className = css`
 & {
-    width:100%;
-    min-height: 15px;
-    height:15px;
+    width:100% !important;
+    min-height: 15px !important;
+    height:15px !important;
     transition: all .1s ease;
     text-align: center;
 }
@@ -23,9 +36,7 @@ const className = css`
 
 const dragClassName = css`
 & {
-    height:25px !important;
     background: yellow;
-    border: 3px dashed #E1E9F6;
 }
 
 `
@@ -132,50 +143,57 @@ export class FormController extends UIController {
                                             TFragment(
                                                 TFragment(
                                                     schema.type === 'input' &&
-                                                    VStack({ alignment: cLeading, spacing: 10 })(
-                                                        Text(schema.label),
-                                                        HStack().height(36).border('solid 1px #7A869A').cornerRadius(6)
-                                                    ).height(),
+                                                    DropContainer(index, schema,
+                                                        VStack({ alignment: cLeading, spacing: 10 })(
+                                                            Text(schema.label),
+                                                            HStack().height(36).border('solid 1px #7A869A').cornerRadius(6)
+                                                        ) , (yon: string, schema: object, index: number) => {
+                                                          
+                                                            if (yon === 'up') {
+                                                                formDesignData.splice(index - 1, 0, schema);
+                                                                setFormDesignData([...formDesignData]);
+                                                            } else {
+                                                                formDesignData.splice(index + 1, 0, schema);
+                                                                setFormDesignData([...formDesignData]);
+                                                            }
+                                                        }
+                                                    ),
                                                     schema.type === 'textarea' &&
-                                                    VStack({ alignment: cLeading, spacing: 10 })(
-                                                        Text(schema.label),
-                                                        HStack().height(136).border('solid 1px #7A869A').cornerRadius(6)
-                                                    ).height(),
+                                                    DropContainer(index,schema,
+                                                        VStack({ alignment: cLeading, spacing: 10 })(
+                                                            Text(schema.label),
+                                                            HStack().height(136).border('solid 1px #7A869A').cornerRadius(6)
+                                                        ) , (yon: string, schema: object, index: number) => {
+                                                          
+                                                            if (yon === 'up') {
+                                                                formDesignData.splice(index - 1, 0, schema);
+                                                                setFormDesignData([...formDesignData]);
+                                                            } else {
+                                                                formDesignData.splice(index + 1, 0, schema);
+                                                                setFormDesignData([...formDesignData]);
+                                                            }
+                                                        }
+                                                    ),
+                                                   
                                                     schema.type === 'header' &&
-                                                    VStack({ alignment: cLeading, spacing: 10 })(
-                                                        Text(schema.label).fontSize(16).fontWeight('600'),
-                                                    ).height()
-                                                ),
-                                                (formDesignData.length > 1 && index < formDesignData.length - 1) &&
-                                                HStack(
-                                                  /*   Text('DROP ZONE')
-                                                        .foregroundColor('rgba(46, 46, 46, 0.4)')
-                                                        .fontSize(10).fontWeight('600') */
+                                                    DropContainer(index, schema,
+                                                        VStack({ alignment: cLeading, spacing: 10 })(
+                                                            Text(schema.label).fontSize(16).fontWeight('600'),
+                                                        ).allHeight(40) ,
+                                                         (yon: string, schema: object, index: number) => {
+                                                          
+                                                            if (yon === 'up') {
+                                                                formDesignData.splice(index - 1, 0, schema);
+                                                                setFormDesignData([...formDesignData]);
+                                                            } else {
+                                                                formDesignData.splice(index + 1, 0, schema);
+                                                                setFormDesignData([...formDesignData]);
+                                                            }
+                                                        }
+                                                    )
+                                                  
                                                 )
-                                                    .className(className)
-
-
-                                                    .border('1px dashed #E1E9F6')
-                                                    //.background('rgba(0, 0, 0, 0.02)')
-                                                    .onDragEnter((ev) => {
-
-                                                        ev.target.classList.add(dragClassName);
-                                                    })
-                                                    .onDragLeave((ev) => {
-                                                       ev.target.classList.remove(dragClassName);
-                                                    })
-                                                    .onDragOver((ev) => {
-                                                        ev.preventDefault();
-                                                        ev.dataTransfer.dropEffect = "copy";
-                                                    })
-                                                    .onDrop((ev) => {
-                                                        ev.preventDefault();
-                                                        ev.target.classList.remove(dragClassName);
-                                                        const data = ev.dataTransfer.getData("text/plain");
-                                                        const schema = JSON.parse(data);
-                                                        formDesignData.splice(index + 1, 0, schema);
-                                                        setFormDesignData([...formDesignData]);
-                                                    })
+                                                
 
                                             )
                                         )
