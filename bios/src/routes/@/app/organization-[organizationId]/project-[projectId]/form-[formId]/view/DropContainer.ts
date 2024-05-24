@@ -1,4 +1,5 @@
 import { VStack, Text, HStack, cLeading, UIView, css } from "@tuval/forms";
+import { useField } from "../../../../../../../context/Field/context";
 
 
 
@@ -32,9 +33,8 @@ const dragClassName = css`
 
 `
 
-export const DropContainer = (index, schema, view: UIView, onDrop) => {
-
-
+export const DropContainer = (view: UIView) => {
+    const {schema, index} = useField();
     return (
         VStack(
             VStack({ alignment: cLeading, spacing: 10 })(
@@ -110,6 +110,10 @@ export const DropContainer = (index, schema, view: UIView, onDrop) => {
                 }
 
 
+            })
+            .onClick((ev)=> {
+                const rect = ev.target.getBoundingClientRect();
+                alert(rect.top)
             })
     )
 }
