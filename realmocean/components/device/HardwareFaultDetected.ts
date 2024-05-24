@@ -1,27 +1,27 @@
 
 
-export default class TaskCreated extends BaseComponent {
+export default class HardwareFaultDetected extends BaseComponent {
 
     get serviceName() {
         return 'com.atlaas.service.device';
     }
 
     get displayName(): string {
-        return 'Battery Low'
+        return 'Hardware fault detected'
     }
 
     get groupName(): string {
         return 'Triggers'
     }
     get description(): string {
-        return 'Trig when batter is low.'
+        return 'Trig when device restarted.'
     }
     get documentation(): string {
         return '';
     }
 
     public get uid() {
-        return 'com.celmino.component.device-battery-low'
+        return 'com.celmino.component.device-hardware-fault-detected'
     }
 
     public buildConfig() {
