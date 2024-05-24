@@ -57,6 +57,7 @@ export const DropContainer = (view: UIView) => {
             .onDragOver((ev) => {
 
                 ev.preventDefault();
+                ev.stopPropagation();
                 ev.dataTransfer.dropEffect = "copy";
                 // Dragging position relative to the viewport
                 const pageX = ev.pageX;
@@ -85,6 +86,7 @@ export const DropContainer = (view: UIView) => {
             })
             .onDrop((ev) => {
                 ev.preventDefault();
+                ev.stopPropagation();
                 ev.target.classList.remove(dragClassName);
                 ev.target.classList.remove(topBorder);
                 ev.target.classList.remove(bottomBorder);
@@ -131,10 +133,10 @@ export const DropContainer = (view: UIView) => {
                 select({
                     pageX:Convert.ToInt32(pageX),
                     pageY :Convert.ToInt32(pageY),
-                    left: Convert.ToInt32(prect.left - rect.left + 8),
-                    top: Convert.ToInt32( rect.top - prect.top + 14),
-                    width: Convert.ToInt32(rect.width + 2),
-                    height: Convert.ToInt32(rect.height + 2),
+                    left: Convert.ToInt32(prect.left - rect.left + 35),
+                    top: Convert.ToInt32( rect.top - prect.top + 53),
+                    width: Convert.ToInt32(rect.width + 10),
+                    height: Convert.ToInt32(rect.height - 20),
                     schema
                 })
             })
