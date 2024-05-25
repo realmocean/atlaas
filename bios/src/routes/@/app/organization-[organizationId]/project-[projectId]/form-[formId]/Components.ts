@@ -33,7 +33,7 @@ export const Components = [
                 icon: Icons.LabelIcon,
                 schema: {
                     type: 'email',
-                    label: '[Label]'
+                    label: '[Email]'
                 }
             },
             {
@@ -41,7 +41,7 @@ export const Components = [
                 icon: Icons.LabelIcon,
                 schema: {
                     type: 'password',
-                    label: '[Label]'
+                    label: '[Password]'
                 }
             },
             {
@@ -65,7 +65,7 @@ export const Components = [
                 icon: Icons.LabelIcon,
                 schema: {
                     type: 'url',
-                    label: '[Label]'
+                    label: '[Url]'
                 }
             },
         ]

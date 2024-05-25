@@ -47,9 +47,13 @@ export const DropContainer = (view: UIView) => {
         )
             .height()
             .onDragEnter((ev) => {
+                ev.preventDefault();
+                ev.stopPropagation();
                 ev.target.classList.add(dragClassName);
             })
             .onDragLeave((ev) => {
+                ev.preventDefault();
+                ev.stopPropagation();
                 ev.target.classList.remove(dragClassName);
                 ev.target.classList.remove(topBorder);
                 ev.target.classList.remove(bottomBorder);
@@ -58,6 +62,7 @@ export const DropContainer = (view: UIView) => {
 
                 ev.preventDefault();
                 ev.stopPropagation();
+
                 ev.dataTransfer.dropEffect = "copy";
                 // Dragging position relative to the viewport
                 const pageX = ev.pageX;

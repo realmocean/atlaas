@@ -24,31 +24,31 @@ import { SchemaProvider } from "./SchemaProviders";
 export function useClickAway(cb) {
     const ref = React.useRef(null);
     const refCb = React.useRef(cb);
-  
+
     React.useLayoutEffect(() => {
-      refCb.current = cb;
+        refCb.current = cb;
     });
-  
+
     React.useEffect(() => {
-      const handler = (e) => {
-        const element = ref.current;
-        if (element && !element.contains(e.target)) {
-          refCb.current(e);
-        }
-      };
-  
-      document.addEventListener("mousedown", handler);
-      document.addEventListener("touchstart", handler);
-  
-      return () => {
-        document.removeEventListener("mousedown", handler);
-        document.removeEventListener("touchstart", handler);
-      };
+        const handler = (e) => {
+            const element = ref.current;
+            if (element && !element.contains(e.target)) {
+                refCb.current(e);
+            }
+        };
+
+        document.addEventListener("mousedown", handler);
+        document.addEventListener("touchstart", handler);
+
+        return () => {
+            document.removeEventListener("mousedown", handler);
+            document.removeEventListener("touchstart", handler);
+        };
     }, []);
-  
+
     return ref;
-  }
-  
+}
+
 const _className = css`
 & {
     width:100% !important;
@@ -59,6 +59,18 @@ const _className = css`
     border:dashed 2px gray;
 }
 
+`
+
+const topBorder = css`
+& {
+   border-top: solid 2px blue;
+}
+
+`
+const bottomBorder = css`
+& {
+   border-bottom: solid 2px blue;
+}
 `
 
 
@@ -239,17 +251,14 @@ export class FormController extends UIController {
         const [formData, setFormData] = useState(AddFormDialogSchema);
         const [formDesignData, setFormDesignData] = useState([]);
 
-        const ref = useClickAway(()=> setSelectorInfo(null));
+        const ref = useClickAway(() => setSelectorInfo(null));
 
         const handleDrop = useCallback((yon, schema, index) => {
-            
+
             if (yon === 'up') {
                 if (index === 0) {
-
                     setFormDesignData([schema, ...formDesignData]);
-                }
-                if (index === 1) {
-
+                } else if (index === 1) {
                     formDesignData.splice(index, 0, schema);
                     setFormDesignData([...formDesignData]);
                 }
@@ -268,14 +277,14 @@ export class FormController extends UIController {
             }
         }, [formDesignData])
 
-        const [selectorInfo, setSelectorInfo] = useState<any>();
+        const [selectorInfo, setSelectorInfo] = useState<any>(null);
 
         const select = useCallback((selectorInfo) => {
             // alert(JSON.stringify(selectorInfo));
             setSelectorInfo({ ...selectorInfo });
         }, [])
 
-    
+
 
         //  const { realms, isLoading } = useListRealms();
         //  console.log('Error -- :' + error?.code)
@@ -484,9 +493,15 @@ export class FormController extends UIController {
                                                             .left(selectorInfo?.left?.toString() ?? "-10000")
                                                             .width(selectorInfo?.width?.toString() ?? 0)
                                                             .height(selectorInfo?.height?.toString() ?? 0)
-                                                            .ref(ref),
+                                                            .ref(ref)
+                                                            .onDragOver((ev) => {
 
 
+                                                                ev.preventDefault();
+                                                                ev.stopPropagation();
+                                                            }),
+
+                                                        formDesignData.length > 0 &&
                                                         VStack({ alignment: cTopLeading, spacing: 0 })(
                                                             ...ForEach(formDesignData)((schema, index) =>
                                                                 TFragment(
@@ -497,25 +512,59 @@ export class FormController extends UIController {
 
                                                                 )
                                                             )
-                                                        ).minHeight(20).height(),
+                                                        ).minHeight(20).height()
+                                                            .onDragOver((ev) => {
+                                                                ev.preventDefault();
+                                                                ev.stopPropagation();
+                                                            }),
                                                     )
                                                         .padding(40)
                                                         .background('white')
                                                         .allWidth(600)
                                                         .height()
+                                                        .onDragLeave((ev) => {
+                                                            ev.target.classList.remove(topBorder);
+                                                            ev.target.classList.remove(bottomBorder);
+                                                        })
                                                         .onDragOver((ev) => {
+                                                            console.log(ev.target.getBoundingClientRect())
                                                             ev.preventDefault();
+                                                            ev.stopPropagation();
                                                             ev.dataTransfer.dropEffect = "copy";
+                                                            // Dragging position relative to the viewport
+                                                            const pageX = ev.pageX;
+                                                            const pageY = ev.pageY;
+
+                                                            // Get the bounding rectangle of the element
+                                                            const rect = ev.target.getBoundingClientRect();
+
+                                                            // Calculate the local coordinates within the element
+                                                            const localX = pageX - rect.left - window.scrollX;
+                                                            const localY = pageY - rect.top - window.scrollY;
+
+                                                            if (localY < rect.height / 2) {
+                                                                ev.target.classList.remove(bottomBorder);
+                                                                ev.target.classList.add(topBorder);
+
+                                                            } else {
+                                                                ev.target.classList.remove(topBorder);
+                                                                ev.target.classList.add(bottomBorder);
+
+                                                            }
+
+
                                                         })
                                                         .onDrop((ev) => {
                                                             ev.preventDefault();
+                                                            ev.target.classList.remove(topBorder);
+                                                            ev.target.classList.remove(bottomBorder);
                                                             const data = ev.dataTransfer.getData("text/plain");
                                                             const schema = JSON.parse(data);
                                                             setFormDesignData([...formDesignData, schema]);
                                                         }),
                                                 )
                                             )
-                                            
+
                                                 .background('#F5F9FF')
                                                 .shadow('0 0 12px 0 rgba(0, 0, 0, 0.12)')
                                                 .cornerRadius(10)
@@ -552,7 +601,7 @@ export class FormController extends UIController {
                 )
                     .background('white')
                     .padding(cHorizontal, 'var(--page-padding)')
-                   
+
         )
 
 
