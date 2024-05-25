@@ -1,30 +1,27 @@
 
-import { Atlaas } from "@realmocean/atlaas";
-import { ForEach, HStack, Icon, ReactView, Text, UIController, UIView, VStack, cHorizontal, cLeading, cTopLeading } from "@tuval/forms";
-import Breadcrumbs, { BreadcrumbsItem } from '@atlaskit/breadcrumbs';
-import React, { useState } from "react";
-import Heading from '@atlaskit/heading';
-import { useProject } from "../../../../../../context/project/context";
-import { useProjectNavigate } from "../../../../../../hooks/useProjectNavigate";
-import { useOrganization } from "../../../../../../context/organization/context";
-import { useOrganizationNavigate } from "../../../../../../hooks/useOrganizationNavigate";
-import { PageHeader } from "../../../../view/PageHeader";
-import { WithReact } from "../../../../../../JSONForms/WithReact";
-import { AddFormDialogSchema } from "./dialogs/AddFormDialog";
-import { JSONForm } from "../../../../../../JSONForms/JSONForm";
-import { useCreateForm } from "../../../../../../hooks/useCreateForm";
-import { useListForms } from "../../../../../../hooks/useListForms";
 import { IconButton } from '@atlaskit/button/new';
 import MoreIcon from '@atlaskit/icon/glyph/more';
+import { ForEach, HStack, Icon, ReactView, Spinner, Text, UIController, UIView, VStack, cHorizontal, cLeading, cTopLeading } from "@tuval/forms";
+import React, { useState } from "react";
+import { JSONForm } from "../../../../../../JSONForms/JSONForm";
+import { useProject } from "../../../../../../context/project/context";
+import { useCreateForm } from "../../../../../../hooks/useCreateForm";
+import { useListForms } from "../../../../../../hooks/useListForms";
+import { useProjectNavigate } from "../../../../../../hooks/useProjectNavigate";
+import { PageHeader } from "../../../../view/PageHeader";
+import { AddFormDialogSchema } from "./dialogs/AddFormDialog";
 //import { JsonEditor } from 'json-edit-react'
 import DropdownMenu, { DropdownItem, DropdownItemGroup } from '@atlaskit/dropdown-menu';
+
+import Button from '@atlaskit/button/new';
+import EmptyState from '@atlaskit/empty-state';
 
 export class FormsController extends UIController {
   public override LoadView(): UIView {
     const { project } = useProject();
 
     const { createForm } = useCreateForm();
-    const { forms } = useListForms();
+    const { forms, isLoading } = useListForms();
     const { navigate } = useProjectNavigate();
 
     // const { fields, handleValidation } = createHeadlessForm(schema, { strictInputType: false });
@@ -33,7 +30,7 @@ export class FormsController extends UIController {
 
     //console.log(fields)
     const [formData, setFormData] = useState();
-    return (
+    return ( isLoading ? Spinner() :
       VStack({ alignment: cTopLeading, spacing: 5 })(
         PageHeader()
           .pageTitle('Forms')
@@ -51,6 +48,15 @@ export class FormsController extends UIController {
               // alert(JSON.stringify(formValues))
             })
           }),
+
+          forms.length === 0 &&    
+          <EmptyState
+          header="You don't have any form."
+          description="Cihazlat sensor, smart phone veya el terminali olabilir."
+          headingLevel={2}
+          primaryAction={<Button appearance="primary">Create a form</Button>}
+          imageUrl={`/images/device_and_hardware.png`}
+        />,
         VStack({ alignment: cTopLeading })(
           ...ForEach(forms)(form =>
             HStack({ spacing: 20 })(

@@ -1,6 +1,6 @@
 
 import { Atlaas } from "@realmocean/atlaas";
-import { ForEach, HStack, ReactView, Fragment as TFragment, Spinner, Text, UIController, UIView, VStack, cHorizontal, cLeading, cTopLeading, useParams, useState, css, ScrollView, cVertical, cTop, Icon, UIViewBuilder } from "@tuval/forms";
+import { ForEach, HStack, ReactView, Fragment as TFragment, Spinner, Text, UIController, UIView, VStack, cHorizontal, cLeading, cTopLeading, useParams, useState, css, ScrollView, cVertical, cTop, Icon, UIViewBuilder, cTrailing } from "@tuval/forms";
 import { PageHeader } from "../../../../view/PageHeader";
 import { useProject } from "../../../../../../context/project/context";
 import { useGetForm } from "../../../../../../hooks/useGetForm";
@@ -18,6 +18,7 @@ import * as Popover from '@radix-ui/react-popover';
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { Components } from "./Components";
 import { SchemaProvider } from "./SchemaProviders";
+import { ActionNemu } from "../../../../../../views/ActionMenu";
 
 
 
@@ -325,6 +326,15 @@ export class FormController extends UIController {
                                                             VStack({ alignment: cLeading })(
                                                                 HStack({ alignment: cLeading, spacing: 10 })(
                                                                     Icon(item.icon),
+                                                                 /*    HStack().draggable(true).allWidth(20).allHeight(20).background('yellow')
+                                                                      
+                                                                        .onClick((ev) => {
+                                                                           
+                                                                            ev.preventDefault();
+                                                                            ev.stopPropagation();
+                                                                            ev.stopImmediatePropagation();
+                                                                            return false;
+                                                                        }), */
                                                                     Text(item.title).fontWeight('500')
                                                                         .fontFamily('Inter, Helvetica Neue, Helvetica, Arial, sans-serif')
                                                                         .fontSmoothing('antialiased')
@@ -476,12 +486,15 @@ export class FormController extends UIController {
                                                 ScrollView({ alignment: cTop, axes: cVertical })(
                                                     VStack({ alignment: cTopLeading })(
                                                         VStack({ alignment: cTopLeading })(
-                                                            HStack()
+                                                            HStack({ alignment: cTrailing })(
+                                                                ActionNemu()
+                                                            )
                                                                 .position('absolute')
-                                                                .top('-28px')
+                                                                .top('-32px')
+                                                                .right('0px')
                                                                 .height(26)
                                                                 .width(100)
-                                                                .background('#246EFF')
+                                                                // .background('#246EFF')
                                                                 .cornerRadius(2)
                                                             //Text(JSON.stringify(selectorInfo))
                                                         )
