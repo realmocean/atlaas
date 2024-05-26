@@ -35,10 +35,11 @@ export class ScenarioController extends UIController {
 
                 ).height().display('block'),
                 Atlaas((data) => {
-                    clearTimeout(filterTimeout);
-                    filterTimeout = setTimeout(() => {
-                        updateScenarioContent(scenarioId, data)
-                    }, 5000)
+   
+                   
+                        alert(JSON.stringify(data))
+                         updateScenarioContent(scenarioId, data)
+                   
 
                 })
             )

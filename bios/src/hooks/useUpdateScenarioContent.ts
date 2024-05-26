@@ -8,6 +8,7 @@ export const useUpdateScenarioContent = () => {
     const { updateDocument, isLoading } = useUpdateDocument(project.$id);
 
     const updateScenarioContent = (scenarioId: string, content: object) => {
+     
         updateDocument({
           databaseId : 'scenarios',
           collectionId: 'scenario_content',
