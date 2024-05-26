@@ -1,5 +1,5 @@
 
-import { Atlaas } from "@realmocean/atlaas";
+import { RafDesigner } from "@realmocean/atlaas";
 import { HStack, UIController, UIView, VStack, cHorizontal, cTopLeading, useParams } from "@tuval/forms";
 import { PageHeader } from "../../../../view/PageHeader";
 import { useProject } from "../../../../../../context/project/context";
@@ -34,7 +34,8 @@ export class ScenarioController extends UIController {
                         ]),
 
                 ).height().display('block'),
-                Atlaas((data) => {
+                RafDesigner()
+                .onSave((data) => {
    
                    
                         alert(JSON.stringify(data))
@@ -42,6 +43,7 @@ export class ScenarioController extends UIController {
                    
 
                 })
+                
             )
                 .background('white')
                 .padding(cHorizontal, 'var(--page-padding)')
