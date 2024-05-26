@@ -30,6 +30,17 @@ export const Schema = {
                             "size": 1245
                         }
                     ]
+                },
+                {
+                    "name": "Scenario Content",
+                    "id": "scenario_content",
+                    "attributes": [
+                        {
+                            "key": "content",
+                            "type": "string",
+                            "size": 121245
+                        }
+                    ]
                 }
             ]
         },
@@ -50,6 +61,17 @@ export const Schema = {
                             "key": "description",
                             "type": "string",
                             "size": 1245
+                        }
+                    ]
+                },
+                {
+                    "name": "Form Content",
+                    "id": "form_content",
+                    "attributes": [
+                        {
+                            "key": "content",
+                            "type": "string",
+                            "size": 121245
                         }
                     ]
                 }

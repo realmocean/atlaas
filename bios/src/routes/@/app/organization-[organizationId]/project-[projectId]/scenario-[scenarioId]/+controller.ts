@@ -7,6 +7,7 @@ import { useProject } from "../../../../../../context/project/context";
 export class ScenarioController extends UIController {
     public override LoadView(): UIView {
         const {project} = useProject();
+        const {} 
         //  const { realms, isLoading } = useListRealms();
         //  console.log('Error -- :' + error?.code)
         return (
@@ -26,7 +27,9 @@ export class ScenarioController extends UIController {
                     ]),
 
                 ).height().display('block'),
-                Atlaas()
+                Atlaas((data)=>
+                console.log(data)
+                )
             )
                 .background('white')
                 .padding(cHorizontal, 'var(--page-padding)')
