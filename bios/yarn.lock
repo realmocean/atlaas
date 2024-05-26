@@ -4685,10 +4685,10 @@
     classcat "^5.0.3"
     zustand "^4.4.1"
 
-"@realmocean/atlaas@^1.2.74":
-  version "1.2.74"
-  resolved "https://registry.yarnpkg.com/@realmocean/atlaas/-/atlaas-1.2.74.tgz#0c2b23f97824cc03f7be71587dbe27efa004aa1e"
-  integrity sha512-4frNFzBWjFlev5cHIh8KLI7lkt9LZA5M6YS/mN+iJaa5mdEpDnDZh1tAPMZFJRh1COfqrcQjyjWrXsKuio+02g==
+"@realmocean/atlaas@^1.2.76":
+  version "1.2.76"
+  resolved "https://registry.yarnpkg.com/@realmocean/atlaas/-/atlaas-1.2.76.tgz#ef6c3307171bfdedce80262afe3a600fbccd5289"
+  integrity sha512-MybBpCt+sZ0Ae3zPKUCKTL9Z+am/lekr+jbTEsQuKKPHk/M3qAwe5X/fuqqsoGqN81KlA67KNhJAIlPJ+QnRFA==
   dependencies:
     "@radix-ui/react-accordion" "^1.1.2"
     "@radix-ui/react-icons" "^1.3.0"

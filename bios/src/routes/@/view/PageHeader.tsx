@@ -1,17 +1,15 @@
-import { Atlaas } from "@realmocean/atlaas";
-import { HStack, Text, UIController, UIView, VStack, ViewProperty, cHorizontal, cTopLeading } from "@tuval/forms";
 import Breadcrumbs, { BreadcrumbsItem } from '@atlaskit/breadcrumbs';
+import { UIView, VStack, ViewProperty, cTopLeading } from "@tuval/forms";
 import React from "react";
-import Heading from '@atlaskit/heading';
 
 import ButtonGroup from '@atlaskit/button/button-group';
 import Button from '@atlaskit/button/new';
 import __noop from '@atlaskit/ds-lib/noop';
+import EditorSearchIcon from '@atlaskit/icon/glyph/editor/search';
+import APageHeader from '@atlaskit/page-header';
 import { Box, Inline, xcss } from '@atlaskit/primitives';
 import Select from '@atlaskit/select';
 import TextField from '@atlaskit/textfield';
-import EditorSearchIcon from '@atlaskit/icon/glyph/editor/search'
-import APageHeader from '@atlaskit/page-header';
 import { useProject } from "../../../context/project/context";
 import { InlineTitle } from "./InlineTitle";
 

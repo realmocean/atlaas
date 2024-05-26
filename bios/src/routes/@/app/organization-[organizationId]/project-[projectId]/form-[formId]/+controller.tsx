@@ -1,24 +1,18 @@
 
-import { Atlaas } from "@realmocean/atlaas";
-import { ForEach, HStack, ReactView, Fragment as TFragment, Spinner, Text, UIController, UIView, VStack, cHorizontal, cLeading, cTopLeading, useParams, useState, css, ScrollView, cVertical, cTop, Icon, UIViewBuilder, cTrailing } from "@tuval/forms";
-import { PageHeader } from "../../../../view/PageHeader";
+import { ForEach, HStack, Icon, ReactView, ScrollView, Spinner, Fragment as TFragment, Text, UIController, UIView, UIViewBuilder, VStack, cHorizontal, cLeading, cTop, cTopLeading, cTrailing, cVertical, css, useParams, useState } from "@tuval/forms";
+import React, { useCallback } from "react";
+import { FormDesignerContext } from "../../../../../../context/FormDesigner/context";
 import { useProject } from "../../../../../../context/project/context";
 import { useGetForm } from "../../../../../../hooks/useGetForm";
-import { WithReact } from "../../../../../../JSONForms/WithReact";
-import React, { Fragment, useCallback } from "react";
-import { AddFormDialogSchema } from "../forms/dialogs/AddFormDialog";
-import { JsonEditor } from 'json-edit-react'
 import { useProjectNavigate } from "../../../../../../hooks/useProjectNavigate";
-import { DropContainer } from "./view/DropContainer";
-import { FieldContext } from "../../../../../../context/Field/context";
-import { FormDesignerContext } from "../../../../../../context/FormDesigner/context";
-import { Icons } from "../../../../../../icons/Icons";
+import { PageHeader } from "../../../../view/PageHeader";
+import { AddFormDialogSchema } from "../forms/dialogs/AddFormDialog";
 
-import * as Popover from '@radix-ui/react-popover';
 import { Cross2Icon } from "@radix-ui/react-icons";
+import * as Popover from '@radix-ui/react-popover';
+import { ActionNemu } from "../../../../../../views/ActionMenu";
 import { Components } from "./Components";
 import { SchemaProvider } from "./SchemaProviders";
-import { ActionNemu } from "../../../../../../views/ActionMenu";
 
 
 

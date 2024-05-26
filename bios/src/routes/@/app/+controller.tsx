@@ -1,11 +1,8 @@
-import { useGetRealm, useListAccountMemberships, useListRealms } from "@realmocean/sdk";
-import { Fragment, ReactView, Text, UIController, UINavigate, UIView, VStack, urlFriendly } from "@tuval/forms";
-import App from './view/Page';
+import { useListAccountMemberships } from "@realmocean/sdk";
+import { UIController, UINavigate, UIView, urlFriendly } from "@tuval/forms";
 import { AccountContext } from '../../../context/account/AccountContext';
-import React from "react";
 
 
-import { Atlaas } from "@realmocean/atlaas";
 
 export class HomeController extends UIController {
     public override LoadView(): UIView {

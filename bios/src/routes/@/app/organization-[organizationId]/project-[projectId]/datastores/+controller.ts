@@ -1,6 +1,5 @@
 
-import { Atlaas } from "@realmocean/atlaas";
-import { HStack, Text, UIController, UIView, VStack, cTopLeading } from "@tuval/forms";
+import { UIController, UIView, VStack, cTopLeading } from "@tuval/forms";
 import { PageHeader } from "../../../../view/PageHeader";
 
 export class DataStoresController extends UIController {

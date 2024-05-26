@@ -1,10 +1,11 @@
 
 import { RafDesigner } from "@realmocean/atlaas";
-import { HStack, UIController, UIView, VStack, cHorizontal, cTopLeading, useParams } from "@tuval/forms";
+import { HStack, Spinner, UIController, UIView, VStack, cHorizontal, cTopLeading, useParams } from "@tuval/forms";
 import { PageHeader } from "../../../../view/PageHeader";
 import { useProject } from "../../../../../../context/project/context";
 import { useUpdateScenarioContent } from "../../../../../../hooks/useUpdateScenarioContent";
 import { useGetScenario } from "../../../../../../hooks/useGetScenario";
+import { useGetScenarioContent } from "../../../../../../hooks/useGetScenarioContent";
 
 let filterTimeout;
 
@@ -13,11 +14,13 @@ export class ScenarioController extends UIController {
         const { project } = useProject();
         const { scenarioId } = useParams();
         const { scenario } = useGetScenario(scenarioId);
+        const {scenarioContent, isLoading } = useGetScenarioContent(scenarioId);
         const { updateScenarioContent } = useUpdateScenarioContent();
 
         //  const { realms, isLoading } = useListRealms();
         //  console.log('Error -- :' + error?.code)
         return (
+            isLoading ? Spinner() :
             VStack({ alignment: cTopLeading, spacing: 5 })(
                 VStack(
                     PageHeader('Scenario 1')
@@ -36,13 +39,13 @@ export class ScenarioController extends UIController {
                 ).height().display('block'),
                 RafDesigner()
                 .onSave((data) => {
-   
-                   
+
                         alert(JSON.stringify(data))
                          updateScenarioContent(scenarioId, data)
                    
 
                 })
+                .initialValue(scenarioContent)
                 
             )
                 .background('white')

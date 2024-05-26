@@ -15,7 +15,7 @@ export const useCreateScenario = () => {
             createContent({
                 documentId: scenario.$id,
                 data : {
-                    content:''
+                    content:JSON.stringify([])
                 }
             })
         })
