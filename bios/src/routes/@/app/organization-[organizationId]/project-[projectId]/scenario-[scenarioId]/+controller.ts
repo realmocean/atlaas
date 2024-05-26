@@ -40,7 +40,7 @@ export class ScenarioController extends UIController {
                 RafDesigner()
                 .onSave((data) => {
 
-                        alert(JSON.stringify(data))
+                
                          updateScenarioContent(scenarioId, data)
                    
 

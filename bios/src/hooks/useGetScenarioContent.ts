@@ -11,6 +11,6 @@ export const useGetScenarioContent = (scenarioId: string): { scenarioContent: ob
         collectionId: 'scenario_content',
         documentId: scenarioId
     });
-
-    return { scenarioContent: document ? JSON.parse(document) : [], isLoading };
+   
+    return { scenarioContent: document ? JSON.parse(document?.content ?? '{"nodes":[]') : [], isLoading };
 }
