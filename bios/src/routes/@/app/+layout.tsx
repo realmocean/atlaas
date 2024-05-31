@@ -1,8 +1,11 @@
 
 import { useCreateOrganization, useDeleteSessions, useListAccountMemberships } from "@realmocean/sdk";
-import { Fragment, UIController, UIRouteOutlet, UIView, VStack, cTopLeading, nanoid, useNavigate, useState, TextField } from "@tuval/forms";
+import { Fragment, UIController, UIRouteOutlet, UIView, VStack, cTopLeading, nanoid, useNavigate, useState, TextField, Text } from "@tuval/forms";
 import { AccountContext } from "../../../context/account";
-
+import { Label } from "@atlaskit/form";
+import Textfield from "@atlaskit/textfield";
+import React from "react";
+import Button from '@atlaskit/button/new';
 
 export class LayoutController extends UIController {
     public BindRouterParams() {
@@ -24,15 +27,17 @@ export class LayoutController extends UIController {
                 return (isLoading ? Fragment() : memberships.length === 0 ?
 
                     VStack(
-                        TextField().onBlur((e: any) => setName(e.target.value))
-                            .value(name),
-                       /*  LoadingButton().label('Create Organization')
-                            .onClick(() => {
-                                createTeam({
-                                    id: nanoid(),
-                                    name: name
-                                })
-                            }) */
+                        <Label htmlFor="basic-textfield">Organization Name</Label>,
+                        <div>
+                            <Textfield name="basic" id="basic-textfield" onChange={(e: any) => setName(e.target.value)} />
+                        </div>,
+                        <Button appearance="primary" onClick={() => {
+                            createTeam({
+                                id: nanoid(),
+                                name: name
+                            },()=> void 0)
+                        }}>Create Organization</Button>
+
                     )
 
                     :

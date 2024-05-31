@@ -23,7 +23,7 @@ export class ScenarioController extends UIController {
             isLoading ? Spinner() :
             VStack({ alignment: cTopLeading, spacing: 5 })(
                 VStack(
-                    PageHeader('Scenario 1')
+                    PageHeader(scenario.name)
                         .breadcrumbs([
                             {
                                 title: 'Projects',
@@ -48,7 +48,7 @@ export class ScenarioController extends UIController {
                 .initialValue(scenarioContent)
                 
             )
-                .background('white')
+                .background('#F8F8F8')
                 .padding(cHorizontal, 'var(--page-padding)')
 
 
